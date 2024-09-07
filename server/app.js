@@ -31,8 +31,7 @@ app.post("/post", async (req, res) => {
         username: username,
         email: email,
         password: password
-    }
-    
+    };
     const userData = await userDetails.insertMany([dataUser])
     res.json(userData)
 })

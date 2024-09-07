@@ -67,7 +67,7 @@ const Login = () => {
 
             <div className="login-page">
                 < div className="login-form-container" >
-                    <h1 className="login-heading">Admin Login</h1>
+                    <h1 className="login-heading">Welcome 🙌</h1>
                     <form onSubmit={onSubmitBtn}>
                         <div className="cont">
                             <input onChange={onChangeName} type="text" placeholder="username" value={username} className="inp-username" />
@@ -85,6 +85,8 @@ const Login = () => {
                     {signUp && <button className="custom-button inp-username btn" onClick={onSignUp}>
                         Sign Up
                     </button>}
+
+                    {signUp && <p>sign up...</p>}
 
 
 
