@@ -1,0 +1,92 @@
+
+.cont{
+    margin: 10px;
+    margin-bottom: 20px;
+}
+.inp-username{
+    height: 40px;
+    width: 250px;
+    border-radius: 5px;
+    text-align: center; 
+    width: 100%;       
+    padding: 10px;     
+    font-size: 16px;    
+    box-sizing: border-box; 
+    font-family: 'Courier New', Courier, monospace;
+    }
+.custom-button {
+    background-color: #4CAF50; 
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    font-weight: 600;
+    margin-top: 15px;
+  }
+  
+  .custom-button:hover {
+    background-color: #45a049; /* Darker green */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+  }
+  .btn{
+    height: 40px;
+    width: 250px;
+    margin: 12px;
+    border-radius: 5px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: medium;
+  }
+  .heading{
+    color: white;
+  }
+  .login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: black;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  .login-form-container {
+    background-color: rgba(255, 255, 255, 0.9); 
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .error-message {
+    color: red;
+    opacity: 0;
+    transform: translateX(-100%);
+    animation: slideInLeft 0.5s ease-in-out forwards;
+    margin-top: -15px;
+    font-size: 13px;
+    text-align: center;
+  }
+  .login-heading{
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 22px;
+
+  }
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
