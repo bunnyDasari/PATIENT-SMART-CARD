@@ -45,7 +45,7 @@ const Login = () => {
         if (isthere.length === 0) {
             isSignUp(!signUp)
         } else {
-            navigate("/card")
+            navigate("/patient")
         }
 
         /*
