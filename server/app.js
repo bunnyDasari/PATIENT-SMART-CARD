@@ -16,7 +16,11 @@ db.then(() => {
 const userSchema = new mongoose.Schema({
     username: String,
     email: String,
-    password: String
+    password: String,
+    firstName: String,
+    secName: String,
+    counrty: String,
+    message: String
 });
 
 const userDetails = mongoose.model("userDetails", userSchema)
@@ -26,17 +30,39 @@ app.get("/", async (req, res) => {
     res.json(userData);
 })
 app.post("/post", async (req, res) => {
-    const { username, email, password } = req.body
+    const { username, email, password, firstName, secName, counrty, message } = req.body
+
     const dataUser = {
         username: username,
         email: email,
-        password: password
+        password: password,
+        firstName: firstName,
+        secName: secName,
+        counrty: counrty,
+        message: message
     };
     const userData = await userDetails.insertMany([dataUser])
     res.json(userData)
+
+
+
+
+
+
 })
 
-
+app.post("/health-card", async (req, res) => {
+    const { firstName, secName, counrty, message, email } = req.body;
+    const cardData = {
+        firstName: firstName,
+        secName: secName,
+        counrty: counrty,
+        message: message,
+        email: email,
+    }
+    const cardUserData = await userDetails.insertMany([cardData]);
+    res.json(cardUserData)
+})
 
 
 

@@ -2,15 +2,16 @@ import React from "react";
 import "./index.css";
 
 const Card = () => {
+
     return (
         <div className="dashboard">
             <h1>Health Card Dashboard</h1>
             <div className="cards-container">
                 <div className="card">
                     <h2>Personal Info</h2>
-                    <p>Name: John Doe</p>
-                    <p>Age: 28</p>
-                    <p>Blood Group: O+</p>
+                    <p>Name:</p>
+                    <p>Age: </p>
+                    <p>Blood Group: </p>
                     <button className="download-button">
                         Download
                     </button>

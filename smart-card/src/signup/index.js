@@ -7,6 +7,8 @@ function Signup() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [matchPassword, setMatchPassword] = useState(false)
+    const [userExist, setUserExist] = useState(false)
+    const [userSignUp, setuserSignUp] = useState(false)
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (password !== confirmPassword) {
@@ -17,15 +19,25 @@ function Signup() {
             }
             console.log(userDetails);
         }
-        const userDetails = {
-            username: username,
-            email: email,
-            password: password
-        }
-        await axios.post("http://localhost:7000/post", userDetails).then((res) => {
-            console.log(res)
-        }).catch((err) => console.log(err))
 
+        const response = await axios.get("http://localhost:7000/")
+        const data = await response.data
+        const checkMail = await data.filter(each => each.email === email)
+
+        if (checkMail.length > 0) {
+            setUserExist(!userExist)
+        } else {
+            const userDetails = {
+                username: username,
+                email: email,
+                password: password
+            }
+            await axios.post("http://localhost:7000/post", userDetails).then((res) => {
+                console.log(res)
+            }).catch((err) => console.log(err))
+            setuserSignUp(!userSignUp)
+        }
+        console.log(checkMail)
 
 
 
@@ -78,6 +90,8 @@ function Signup() {
                 <button type="submit" className="signup-button">Signup</button>
                 {matchPassword && <p>Password not Matched</p>}
             </form>
+            {userExist && <p>Email already exsist</p>}
+            {userSignUp && <p>signed up!!</p>}
         </div>
     );
 }
