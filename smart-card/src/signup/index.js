@@ -90,8 +90,8 @@ function Signup() {
                 <button type="submit" className="signup-button">Signup</button>
                 {matchPassword && <p>Password not Matched</p>}
             </form>
-            {userExist && <p>Email already exsist</p>}
-            {userSignUp && <p>signed up!!</p>}
+            {userExist && <p className='user-signed'>Email already exsist</p>}
+            {userSignUp && <p className='user-signed'>signed up!!</p>}
         </div>
     );
 }

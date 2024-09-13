@@ -52,3 +52,9 @@
     background-color: #0056b3;
   }
   
+  .user-signed{
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: larger;
+    font-weight: bold;
+  }

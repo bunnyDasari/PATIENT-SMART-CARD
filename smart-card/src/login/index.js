@@ -16,18 +16,13 @@ const Login = () => {
     }
     let navigate = useNavigate();
 
-    /*const onSubmitSuccess = jwtToken => {
+    const onSubmitSuccess = jwtToken => {
         Cookies.set('jwt_token', jwtToken, {
             expires: 30,
         })
-        navigate("/")
 
     }
-   
-    
-    const errorMsg = (errorMsg) => {
-        setError(errorMsg)
-    }*/
+
 
     const onSignUp = () => {
         navigate("/signup")
@@ -39,8 +34,8 @@ const Login = () => {
         const data = await response.data
 
         const isthere = data.filter(each => each.username === username)
-
-        console.log(isthere.length)
+        const jwtToken = data.find(token => token.token)
+        console.log(jwtToken.token)
 
         if (isthere.length === 0) {
             isSignUp(!signUp)
@@ -48,19 +43,13 @@ const Login = () => {
             navigate("/patient")
         }
 
-        /*
         if (response.status === 200) {
-            onSubmitSuccess(data.jwt_token)
-        } else {
-            errorMsg(data.error_msg)
-        }*/
+            onSubmitSuccess(jwtToken.token)
+        }
 
     }
 
-    const jwt = Cookies.get("jwt_token")
-    //if (jwt !== undefined) {
-    // return navigate("/home")
-    //}
+
     return (
 
         <>
@@ -76,17 +65,17 @@ const Login = () => {
                             <input onChange={onChangePass} type="password" placeholder="password" value={password} className="inp-username" />
                         </div>
                         <p className="error-message">{error}</p>
-                        {!signUp && <button className="custom-button inp-username btn">
+                       <button className="custom-button inp-username btn">
                             Submit
-                        </button>}
+                        </button>
 
 
                     </form>
-                    {signUp && <button className="custom-button inp-username btn" onClick={onSignUp}>
+                    <button className="custom-button inp-username btn" onClick={onSignUp}>
                         Sign Up
-                    </button>}
+                    </button>
 
-                    {signUp && <p>sign up...</p>}
+                    {signUp && <p className="user-found">User not found</p>}
 
 
 
