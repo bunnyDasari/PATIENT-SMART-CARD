@@ -77,8 +77,6 @@ const Login = () => {
 
                     {signUp && <p className="user-found">User not found</p>}
 
-
-
                 </div >
             </div >
         </>

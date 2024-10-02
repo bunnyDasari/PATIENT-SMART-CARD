@@ -1,8 +1,10 @@
-.container {
+.container-patient {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 10vh;
+    background-color: #1A1A2E;
+    height: 80vh;
 }
 
 .input-ele {
@@ -15,14 +17,16 @@
     font-weight: bold;
     font-size: medium;
     border-color: aliceblue;
-    
+
 }
-.para{
+
+.para {
     font-style: oblique;
     font-weight: bold;
-    
+    color: aliceblue;
 }
-.btn-ele{
+
+.btn-ele {
     height: 50px;
     width: 300px;
     border-radius: 10px;

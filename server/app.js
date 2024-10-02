@@ -4,9 +4,11 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken")
 const userDetails = require("./db")
 const serectkey = "rohan124"
+
 app.use(cors())
 app.use(express.json())
 
+const PORT = process.env.PORT || 8000
 
 
 app.get("/", async (req, res) => {

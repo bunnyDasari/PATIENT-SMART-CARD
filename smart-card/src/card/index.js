@@ -1,43 +1,27 @@
-import React from "react";
-import "./index.css";
+import React from 'react';
+import { motion } from 'framer-motion';
+import './PatientCard.css';  
 
-const Card = () => {
-
-    return (
-        <div className="dashboard">
-            <h1>Health Card Dashboard</h1>
-            <div className="cards-container">
-                <div className="card">
-                    <h2>Personal Info</h2>
-                    <p>Name:</p>
-                    <p>Age: </p>
-                    <p>Blood Group: </p>
-                    <button className="download-button">
-                        Download
-                    </button>
-                </div>
-                <div className="card">
-                    <h2>Medical History</h2>
-                    <p>Diabetes: No</p>
-                    <p>Allergies: None</p>
-                    <p>Last Check-up: 01-Jan-2024</p>
-                    <button className="download-button">
-                        Download
-                    </button>
-                </div>
-                <div className="card">
-                    <h2>Health Metrics</h2>
-                    <p>Weight: 70kg</p>
-                    <p>Height: 175cm</p>
-                    <p>BMI: 22.9</p>
-                    <button className="download-button">
-                        Download
-                    </button>
-                </div>
-            </div>
-
-        </div>
-    );
+const PatientCard = () => {
+  return (
+    <div className="container">
+      <motion.div
+        initial={{ x: '-100vw', opacity: 0 }}  
+        animate={{ x: 0, opacity: 1 }}       
+        transition={{
+          type: 'spring',
+          stiffness: 50,
+          damping: 15,
+          duration: 0.5,
+        }}
+        className="card"                       
+      >
+        <h2>Patient Name</h2>
+        <p>Age: 45</p>
+        <p>Condition: Stable</p>
+      </motion.div>
+    </div>
+  );
 };
 
-export default Card
+export default PatientCard;

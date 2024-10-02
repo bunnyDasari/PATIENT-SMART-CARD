@@ -44,7 +44,7 @@ const PatientCard = () => {
     }
     
     return (
-        <div className="container">
+        <div className="container-patient">
             {!viewDataBtn && <form onSubmit={onSubmitForm}>
                 <h1 className="para">please enter your health Deatils</h1>
                 <div>
