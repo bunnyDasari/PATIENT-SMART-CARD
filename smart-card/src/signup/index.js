@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './index.css';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 function Signup() {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -9,6 +10,7 @@ function Signup() {
     const [matchPassword, setMatchPassword] = useState(false)
     const [userExist, setUserExist] = useState(false)
     const [userSignUp, setuserSignUp] = useState(false)
+    const navigate = useNavigate()
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (password !== confirmPassword) {
@@ -36,6 +38,7 @@ function Signup() {
                 console.log(res)
             }).catch((err) => console.log(err))
             setuserSignUp(!userSignUp)
+            navigate("/patient")
         }
         console.log(checkMail)
 
