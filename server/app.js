@@ -5,10 +5,8 @@ const jwt = require("jsonwebtoken")
 const userDetails = require("./db")
 const serectkey = "rohan124"
 
-app.use(cors({ origin: "https://new-sandy-one.vercel.app/" }))
+app.use(cors("*"))
 app.use(express.json())
-
-const PORT = process.env.PORT || 8000
 
 
 app.get("/", async (req, res) => {

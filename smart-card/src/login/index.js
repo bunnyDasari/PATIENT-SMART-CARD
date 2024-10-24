@@ -22,6 +22,7 @@ const Login = () => {
         })
 
     }
+    console.log()
 
 
     const onSignUp = () => {
@@ -29,15 +30,15 @@ const Login = () => {
     }
     const onSubmitBtn = async (e) => {
         e.preventDefault()
-
+        const checkUser = Cookies.get("jwt_token")
         const response = await axios.get("http://localhost:7000/")
         const data = await response.data
-
+        console.log(data)
         const isthere = data.filter(each => each.username === username)
         const jwtToken = data.find(token => token.token)
         console.log(jwtToken.token)
 
-        if (isthere.length === 0) {
+        if (isthere.length === 0 && checkUser === undefined) {
             isSignUp(!signUp)
         } else {
             navigate("/patient")
@@ -65,7 +66,7 @@ const Login = () => {
                             <input onChange={onChangePass} type="password" placeholder="password" value={password} className="inp-username" />
                         </div>
                         <p className="error-message">{error}</p>
-                       <button className="custom-button inp-username btn">
+                        <button className="custom-button inp-username btn">
                             Submit
                         </button>
 

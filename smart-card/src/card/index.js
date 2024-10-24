@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import './PatientCard.css';
 import Cookies from 'js-cookie'
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 const Card = () => {
   const [userName, setUserName] = useState({ name: "" })
   useEffect(() => {
@@ -14,7 +15,13 @@ const Card = () => {
     }
     renderName();
   }, [])
-  console.log(Cookies.get("jwt_token"))
+  const navigate = useNavigate()
+  const onClickSignOut = () => {
+    Cookies.remove("jwt_token")
+    navigate("/")
+
+  }
+
   return (
     <div className="container">
 
@@ -34,6 +41,7 @@ const Card = () => {
         <p>Age: 45</p>
         <p>Condition: Stable</p>
       </motion.div>
+      <button onClick={onClickSignOut}>Sign Out</button>
     </div>
   );
 };
