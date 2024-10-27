@@ -4,7 +4,6 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken")
 const userDetails = require("./db")
 const serectkey = "rohan124"
-
 app.use(cors("*"))
 app.use(express.json())
 
@@ -34,6 +33,16 @@ app.post("/post", async (req, res) => {
     const userData = await userDetails.insertMany([dataUser])
     res.send(userData)
 
+})
+app.post("/paitantDetails", async (req, res) => {
+    const { fullName, age, PhoneNo } = req.body
+    const PatinetDetails = {
+        fullName: fullName,
+        PhoneNo: PhoneNo,
+        age: age
+    }
+    const PatinetDetailsSend = await userDetails.insertMany([PatinetDetails])
+    res.send(PatinetDetailsSend)
 })
 
 

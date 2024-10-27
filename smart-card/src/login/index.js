@@ -22,9 +22,6 @@ const Login = () => {
         })
 
     }
-    console.log()
-
-
     const onSignUp = () => {
         navigate("/signup")
     }
@@ -38,7 +35,7 @@ const Login = () => {
         const jwtToken = data.find(token => token.token)
         console.log(jwtToken.token)
 
-        if (isthere.length === 0 && checkUser === undefined) {
+        if (isthere.length === 0) {
             isSignUp(!signUp)
         } else {
             navigate("/patient")

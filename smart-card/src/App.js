@@ -4,12 +4,15 @@ import Signup from "./signup";
 import Card from "./card";
 import PatientCard from "./patientDetails";
 import ProtectedRoute from "./protect"; // Import your ProtectedRoute component
+import Cookies from 'js-cookie';
+const checkLogin = Cookies.get("jwt_token")
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
+        {checkLogin === undefined ? <Route path="/" element={<Login />} /> : <Route path="/card" element={<Card />} />}
+
         <Route path="/signup" element={<Signup />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/card" element={<Card />} />

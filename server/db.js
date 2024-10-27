@@ -10,11 +10,10 @@ const userSchema = new mongoose.Schema({
     username: String,
     email: String,
     password: String,
-    firstName: String,
-    secName: String,
-    counrty: String,
-    message: String,
-    token: String
+    token: String,
+    PhoneNo : Number,
+    fullName : String,
+    age : Number,
 });
 
 const userDetails = mongoose.model("userDetails", userSchema)
