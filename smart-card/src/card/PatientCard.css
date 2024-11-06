@@ -1,20 +1,52 @@
+/* PatientCard.css */
+
 .container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    background-color: #FAF3E0;
-    height: 78vh;
-    padding: 80px;
-}
-
-
-.card {
-    width: 550px;
-    height: 400px;
-    background: linear-gradient(135deg, #0f0520, #1b1b2f);
-    border-radius: 15px;
+    justify-content: center;
+    height: 100vh; /* Full height of the viewport */
+    background-color: #f0f4f8; /* Change to your desired background color */
     padding: 20px;
-    color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
-}
+  }
+  
+  .card {
+    background-color: white; /* Card background color */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    padding: 20px; /* Padding inside the card */
+    width: 300px; /* Fixed width for the card */
+    text-align: center; /* Center text inside the card */
+    transition: transform 0.2s; /* Animation for hover effect */
+  }
+  
+  .card:hover {
+    transform: scale(1.05); /* Slightly increase size on hover */
+  }
+  
+  h2 {
+    font-size: 24px; /* Font size for the name */
+    color: #333; /* Color for the name */
+    margin: 0; /* Remove default margin */
+  }
+  
+  p {
+    font-size: 16px; /* Font size for age and phone */
+    color: #666; /* Color for age and phone */
+  }
+  
+  button {
+    margin-top: 20px; /* Space between card and button */
+    padding: 10px 15px; /* Padding for the button */
+    background-color: #007bff; /* Button background color */
+    color: white; /* Button text color */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Animation for background color change */
+  }
+  
+  button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+  }
+  

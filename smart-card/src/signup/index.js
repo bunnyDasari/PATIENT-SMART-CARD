@@ -25,7 +25,7 @@ function Signup() {
         const response = await axios.get("http://localhost:7000/")
         const data = await response.data
         const checkMail = await data.filter(each => each.email === email)
-
+        
         if (checkMail.length > 0) {
             setUserExist(!userExist)
         } else {

@@ -10,11 +10,13 @@ const Card = () => {
     const renderName = async () => {
       const response = await axios.get("http://localhost:7000/")
       const data = await response.data
+      console.log(data)
       setUserName({ name: data[data.length - 1].fullName, age: data[data.length - 1].age, phone: data[data.length - 1].PhoneNo });
       console.log(data);
     }
     renderName();
-  }, [])
+  }, []) 
+  
   const navigate = useNavigate()
   const onClickSignOut = () => {
     Cookies.remove("jwt_token")

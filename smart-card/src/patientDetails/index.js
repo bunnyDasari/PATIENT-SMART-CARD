@@ -2,7 +2,6 @@ import "./index.css"
 import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 import axios from "axios";
-
 const PatientCard = () => {
     const [viewDataBtn, setViewData] = useState(false)
     const [fullName, setFullName] = useState("")
@@ -24,8 +23,6 @@ const PatientCard = () => {
         }).catch((error) => {
             console.log("Data error", error)
         })
-
-
     }
     const onClickViewCard = () => {
         navigate("/card")

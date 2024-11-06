@@ -1,83 +1,79 @@
-import { useState, useEffect } from "react"
-import Cookies from 'js-cookie'
+import { useState } from "react";
+import Cookies from 'js-cookie';
 import { useNavigate } from "react-router-dom";
-import "./index.css"
-import axios from "axios"
+import "./index.css";
+import axios from "axios";
+
 const Login = () => {
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
-    const [error, setError] = useState("")
-    const [signUp, isSignUp] = useState(false)
-    const onChangeName = (e) => {
-        setUsername(e.target.value)
-    }
-    const onChangePass = (e) => {
-        setPassword(e.target.value)
-    }
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const [signUp, isSignUp] = useState(false);
     let navigate = useNavigate();
 
+    const onChangeName = (e) => setUsername(e.target.value);
+    const onChangePass = (e) => setPassword(e.target.value);
+
     const onSubmitSuccess = jwtToken => {
-        Cookies.set('jwt_token', jwtToken, {
-            expires: 30,
-        })
+        Cookies.set('jwt_token', jwtToken, { expires: 30 });
+    };
 
-    }
-    const onSignUp = () => {
-        navigate("/signup")
-    }
+    const onSignUp = () => navigate("/signup");
+
     const onSubmitBtn = async (e) => {
-        e.preventDefault()
-        const checkUser = Cookies.get("jwt_token")
-        const response = await axios.get("http://localhost:7000/")
-        const data = await response.data
-        console.log(data)
-        const isthere = data.filter(each => each.username === username)
-        const jwtToken = data.find(token => token.token)
-        console.log(jwtToken.token)
-
-        if (isthere.length === 0) {
-            isSignUp(!signUp)
-        } else {
-            navigate("/patient")
+        e.preventDefault();
+        try {
+            const response = await axios.get("http://localhost:7000/");
+            const data = response.data;
+            const isthere = data.filter(each => each.username === username);
+            const jwtToken = data.find(token => token.token);
+            
+            if (isthere.length === 0) {
+                isSignUp(true);
+            } else {
+                navigate("/card");
+                onSubmitSuccess(jwtToken.token);
+            }
+        } catch (error) {
+            setError("Login failed. Please try again.");
         }
-
-        if (response.status === 200) {
-            onSubmitSuccess(jwtToken.token)
-        }
-
-    }
-
+    };
 
     return (
-
-        <>
-
-            <div className="login-page">
-                < div className="login-form-container" >
-                    <h1 className="login-heading">Welcome 🙌</h1>
-                    <form onSubmit={onSubmitBtn}>
-                        <div className="cont">
-                            <input onChange={onChangeName} type="text" placeholder="username" value={username} className="inp-username" />
-                        </div>
-                        <div className="cont">
-                            <input onChange={onChangePass} type="password" placeholder="password" value={password} className="inp-username" />
-                        </div>
-                        <p className="error-message">{error}</p>
-                        <button className="custom-button inp-username btn">
-                            Submit
-                        </button>
-
-
-                    </form>
-                    <button className="custom-button inp-username btn" onClick={onSignUp}>
-                        Sign Up
+        <div className="login-page">
+            <div className="login-form-container">
+                <h1 className="login-heading">Welcome 🙌</h1>
+                <form onSubmit={onSubmitBtn}>
+                    <div className="cont">
+                        <input 
+                            onChange={onChangeName} 
+                            type="text" 
+                            placeholder="Username" 
+                            value={username} 
+                            className="inp-username" 
+                        />
+                    </div>
+                    <div className="cont">
+                        <input 
+                            onChange={onChangePass} 
+                            type="password" 
+                            placeholder="Password" 
+                            value={password} 
+                            className="inp-username" 
+                        />
+                    </div>
+                    {error && <p className="error-message">{error}</p>}
+                    <button type="submit" className="custom-button">
+                        Login
                     </button>
+                </form>
+                <button onClick={onSignUp} className="custom-button">
+                    Sign Up
+                </button>
+                {signUp && <p className="user-found">User not found</p>}
+            </div>
+        </div>
+    );
+};
 
-                    {signUp && <p className="user-found">User not found</p>}
-
-                </div >
-            </div >
-        </>
-    )
-}
-export default Login
+export default Login;
