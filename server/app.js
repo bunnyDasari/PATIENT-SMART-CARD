@@ -36,6 +36,7 @@ app.get('/user-details', async (req, res) => {
     }
 });
 
+
 app.post("/post", async (req, res) => {
     const { username, email, password, firstName, secName, counrty, message, PhoneNo } = req.body
     if (!username || !email || !password || !firstName || !secName || !counrty || !message || !PhoneNo) {
@@ -62,6 +63,8 @@ app.post("/post", async (req, res) => {
     res.send(userData)
 
 })
+
+
 app.post("/paitantDetails", async (req, res) => {
     const { fullName, age, PhoneNo } = req.body
     if (!fullName || !age || !PhoneNo) res.send("please fill all the details...")

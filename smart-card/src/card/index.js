@@ -18,7 +18,9 @@ const Card = () => {
             Authorization: `Bearer ${token}`,
           },
         });
+
         const data = response.data;
+        console.log(data.username)
         setUserName({ name: data.username, age: data.email, phone: data.PhoneNo });
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -26,6 +28,8 @@ const Card = () => {
     };
     renderName();
   }, [token]);
+
+  
 
   const onClickSignOut = () => {
     Cookies.remove("jwt_token");
