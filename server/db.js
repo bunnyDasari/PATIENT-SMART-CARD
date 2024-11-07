@@ -11,9 +11,11 @@ const userSchema = new mongoose.Schema({
     email: String,
     password: String,
     token: String,
-    PhoneNo : Number,
-    fullName : String,
-    age : Number,
+    PhoneNo: Number,
+    fullName: String,
+    age: Number,
+    name: String,
+    message: String
 });
 
 const userDetails = mongoose.model("userDetails", userSchema)

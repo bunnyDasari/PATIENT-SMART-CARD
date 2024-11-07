@@ -23,16 +23,14 @@ const Login = () => {
     const onSubmitBtn = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.get("http://localhost:7000/");
+            const response = await axios.post("http://localhost:7000/login", { username: username, password: password });
             const data = response.data;
-            const isthere = data.filter(each => each.username === username);
-            const jwtToken = data.find(token => token.token);
-            
-            if (isthere.length === 0) {
+        
+            if (data.token === undefined) {
                 isSignUp(true);
             } else {
                 navigate("/card");
-                onSubmitSuccess(jwtToken.token);
+                onSubmitSuccess(data.token);
             }
         } catch (error) {
             setError("Login failed. Please try again.");
@@ -45,21 +43,21 @@ const Login = () => {
                 <h1 className="login-heading">Welcome 🙌</h1>
                 <form onSubmit={onSubmitBtn}>
                     <div className="cont">
-                        <input 
-                            onChange={onChangeName} 
-                            type="text" 
-                            placeholder="Username" 
-                            value={username} 
-                            className="inp-username" 
+                        <input
+                            onChange={onChangeName}
+                            type="text"
+                            placeholder="Username"
+                            value={username}
+                            className="inp-username"
                         />
                     </div>
                     <div className="cont">
-                        <input 
-                            onChange={onChangePass} 
-                            type="password" 
-                            placeholder="Password" 
-                            value={password} 
-                            className="inp-username" 
+                        <input
+                            onChange={onChangePass}
+                            type="password"
+                            placeholder="Password"
+                            value={password}
+                            className="inp-username"
                         />
                     </div>
                     {error && <p className="error-message">{error}</p>}

@@ -7,6 +7,7 @@ function Signup() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [PhoneNo, setPhone] = useState("")
     const [matchPassword, setMatchPassword] = useState(false)
     const [userExist, setUserExist] = useState(false)
     const [userSignUp, setuserSignUp] = useState(false)
@@ -25,14 +26,15 @@ function Signup() {
         const response = await axios.get("http://localhost:7000/")
         const data = await response.data
         const checkMail = await data.filter(each => each.email === email)
-        
+
         if (checkMail.length > 0) {
             setUserExist(!userExist)
         } else {
             const userDetails = {
                 username: username,
                 email: email,
-                password: password
+                password: password,
+                PhoneNo: PhoneNo
             }
             await axios.post("http://localhost:7000/post", userDetails).then((res) => {
                 console.log(res)
@@ -86,6 +88,16 @@ function Signup() {
                         type="password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
+                        className="input"
+                        required
+                    />
+                </div>
+                <div className="input-group">
+                    <label className="label">Phone No</label>
+                    <input
+                        type="text"
+                        value={PhoneNo}
+                        onChange={(e) => setPhone(e.target.value)}
                         className="input"
                         required
                     />

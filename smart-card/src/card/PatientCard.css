@@ -1,52 +1,42 @@
-/* PatientCard.css */
-
+/* Dark background styling */
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh; /* Full height of the viewport */
-    background-color: #f0f4f8; /* Change to your desired background color */
-    padding: 20px;
-  }
-  
-  .card {
-    background-color: white; /* Card background color */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    padding: 20px; /* Padding inside the card */
-    width: 300px; /* Fixed width for the card */
-    text-align: center; /* Center text inside the card */
-    transition: transform 0.2s; /* Animation for hover effect */
-  }
-  
-  .card:hover {
-    transform: scale(1.05); /* Slightly increase size on hover */
-  }
-  
-  h2 {
-    font-size: 24px; /* Font size for the name */
-    color: #333; /* Color for the name */
-    margin: 0; /* Remove default margin */
-  }
-  
-  p {
-    font-size: 16px; /* Font size for age and phone */
-    color: #666; /* Color for age and phone */
-  }
-  
-  button {
-    margin-top: 20px; /* Space between card and button */
-    padding: 10px 15px; /* Padding for the button */
-    background-color: #007bff; /* Button background color */
-    color: white; /* Button text color */
-    border: none; /* Remove default border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s; /* Animation for background color change */
-  }
-  
-  button:hover {
-    background-color: #0056b3; /* Darker shade on hover */
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #121212; /* Dark background */
+  color: #ffffff; /* Light text color */
+}
+
+.card {
+  background-color: #1f1f1f;
+  color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  width: 300px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.card:hover {
+  background-color: #333333; /* Slightly lighter on hover */
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #6200ea; /* Primary button color */
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button:hover {
+  background-color: #3700b3; /* Darker on hover */
+  color: #ffffff;
+}

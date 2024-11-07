@@ -12,8 +12,35 @@ app.get("/", async (req, res) => {
     const userData = await userDetails.find();
     res.json(userData);
 })
+
+app.post("/login", async (req, res) => {
+    const { username, password } = req.body
+    if (!username || !password) res.send("fill the login details");
+    const userLoginData = await userDetails.findOne({ username: username })
+    res.send(userLoginData)
+    if (!userLoginData) res.send("user not found.");
+})
+
+app.get('/user-details', async (req, res) => {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) return res.status(401).json({ message: 'Unauthorized' });
+
+    try {
+        const decoded = jwt.verify(token, serectkey);
+        console.log(decoded)
+        const user = await userDetails.findOne({ email: decoded.emial })
+        console.log(user)
+        res.json(user);
+    } catch (error) {
+        res.status(403).json({ message: 'Forbidden' });
+    }
+});
+
 app.post("/post", async (req, res) => {
-    const { username, email, password, firstName, secName, counrty, message } = req.body
+    const { username, email, password, firstName, secName, counrty, message, PhoneNo } = req.body
+    if (!username || !email || !password || !firstName || !secName || !counrty || !message || !PhoneNo) {
+        res.send("please fill all the details")
+    }
     const jwtToken = jwt.sign({
         emial: email
     }, serectkey)
@@ -26,7 +53,8 @@ app.post("/post", async (req, res) => {
         secName: secName,
         counrty: counrty,
         message: message,
-        token: jwtToken
+        token: jwtToken,
+        PhoneNo: PhoneNo
 
     };
 
@@ -36,6 +64,8 @@ app.post("/post", async (req, res) => {
 })
 app.post("/paitantDetails", async (req, res) => {
     const { fullName, age, PhoneNo } = req.body
+    if (!fullName || !age || !PhoneNo) res.send("please fill all the details...")
+
     const PatinetDetails = {
         fullName: fullName,
         PhoneNo: PhoneNo,
@@ -46,7 +76,17 @@ app.post("/paitantDetails", async (req, res) => {
 })
 
 
-
+app.post("/feedback", async (req, res) => {
+    const { name, email, message } = req.body
+    if (!name || !email || !message) res.send("plse fill all the details");
+    const feedbackData = {
+        name: name,
+        email: email,
+        message: message
+    }
+    const feedbackDataSend = await userDetails.insertMany([feedbackData])
+    res.send(feedbackDataSend)
+})
 
 
 

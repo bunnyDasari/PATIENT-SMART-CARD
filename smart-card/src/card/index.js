@@ -1,27 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import './PatientCard.css';
-import Cookies from 'js-cookie'
+import Cookies from 'js-cookie';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+
 const Card = () => {
-  const [userName, setUserName] = useState({ name: "", age: "", phone: "" })
+  const [userName, setUserName] = useState({ name: "", age: "", phone: "" });
+  const token = Cookies.get("jwt_token");
+  const navigate = useNavigate();
+
   useEffect(() => {
     const renderName = async () => {
-      const response = await axios.get("http://localhost:7000/")
-      const data = await response.data
-      console.log(data)
-      setUserName({ name: data[data.length - 1].fullName, age: data[data.length - 1].age, phone: data[data.length - 1].PhoneNo });
-      console.log(data);
-    }
+      try {
+        const response = await axios.get("http://localhost:7000/user-details", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = response.data;
+        setUserName({ name: data.username, age: data.email, phone: data.PhoneNo });
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
     renderName();
-  }, []) 
-  
-  const navigate = useNavigate()
+  }, [token]);
+
   const onClickSignOut = () => {
-    Cookies.remove("jwt_token")
-    navigate("/")
-  }
+    Cookies.remove("jwt_token");
+    navigate("/");
+  };
 
   return (
     <div className="container">
@@ -34,14 +43,21 @@ const Card = () => {
           damping: 15,
           duration: 0.5,
         }}
+        whileHover={{ scale: 1.05, rotate: 2 }}
+        whileTap={{ scale: 0.95 }}
         className="card"
-
       >
         <h2>{userName.name}</h2>
         <p>Age: {userName.age}</p>
-        <p>Phone : {userName.phone}</p>
+        <p>Phone: {userName.phone}</p>
       </motion.div>
-      <button onClick={onClickSignOut}>Sign Out</button>
+      <motion.button
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        onClick={onClickSignOut}
+      >
+        Sign Out
+      </motion.button>
     </div>
   );
 };

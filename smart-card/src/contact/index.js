@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './index.css';
 import Navbar from '../navbar';
+import axios from 'axios';
 
 const Contact = () => {
     const [formData, setFormData] = useState({
@@ -17,14 +18,18 @@ const Contact = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setFormData({
             name: '',
             email: '',
             message: ''
         });
+        const response = await axios.post("http://localhost:7000/feedback", formData)
+        const data = await response.data
+        console.log(data)
     };
+    console.log(formData)
 
     const onClickFeedback = () => {
         setFeedback(!onFeedback)
@@ -32,7 +37,7 @@ const Contact = () => {
     return (
         <>
             <Navbar />
-            {onFeedback ? (<div className="contact-page animate-fade-in">
+            <div className="contact-page animate-fade-in">
                 <h1 className="contact-header">Get in Touch</h1>
                 <p className="contact-subheader">We'd love to hear from you! Feel free to reach out with any questions or feedback.</p>
 
@@ -70,9 +75,7 @@ const Contact = () => {
                     <p>Email: <a href="mailto:contact@patientsmartcard.com">contact@patientsmartcard.com</a></p>
                     <p>Phone: <a href="tel:+1234567890">+1 (234) 567-890</a></p>
                 </div>
-            </div>) : (<div>
-                <img src="https://media.istockphoto.com/id/670634442/photo/business-woman-hands-holding-white-card-sign-with-thank-you-for-your-feedback-text-message.jpg?s=612x612&w=0&k=20&c=DlgkFRembc-YXIyHB86jFSxoHXG7MRC84wresMlypks=" />
-            </div>)}
+            </div>)
 
 
         </>
