@@ -103,15 +103,6 @@ app.post("/feedback", async (req, res) => {
 
 
 
-
-
-
-
-
-
-
-
-
 app.listen(7000, () => {
     console.log("server is running at port 7000");
 })
