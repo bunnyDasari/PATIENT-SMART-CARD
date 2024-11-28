@@ -23,9 +23,9 @@ const Login = () => {
     const onSubmitBtn = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:7000/login", { username: username, password: password });
+            const response = await axios.post("http://localhost:7000/login", { username, password });
             const data = response.data;
-        
+            console.log(data)
             if (data.token === undefined) {
                 isSignUp(true);
             } else {

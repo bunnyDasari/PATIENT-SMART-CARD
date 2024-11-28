@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -7,6 +8,7 @@ const serectkey = "rohan124"
 app.use(cors("*"))
 app.use(express.json())
 
+const PORT = process.env.PORT || 7000
 
 app.get("/", async (req, res) => {
     const userData = await userDetails.find();
@@ -17,12 +19,19 @@ app.post("/login", async (req, res) => {
     const { username, password } = req.body
     if (!username || !password) res.send("fill the login details");
     const userLoginData = await userDetails.findOne({ username: username })
-    res.send(userLoginData)
-    if (!userLoginData) res.send("user not found.");
+    if (!userLoginData) {
+        res.send("User not found").status(404)
+    } else {
+        res.send(userLoginData).status(200)
+    }
+
+
 })
 
 app.get('/user-details', async (req, res) => {
     const token = req.headers.authorization?.split(' ')[1];
+    console.log(token)
+    console.log(req.headers.authorization)
     if (!token) return res.status(401).json({ message: 'Unauthorized' });
 
     try {
@@ -38,9 +47,9 @@ app.get('/user-details', async (req, res) => {
 
 
 app.post("/post", async (req, res) => {
-    const { username, email, password, firstName, secName, counrty, message, PhoneNo } = req.body
-    if (!username || !email || !password || !firstName || !secName || !counrty || !message || !PhoneNo) {
-        res.send("please fill all the details")
+    const { username, email, password, firstName, secName, counrty, message, PhoneNo, BloodGroup, HealthHis } = req.body
+    if (!username || !email || !password || !firstName || !secName || !counrty || !message || !PhoneNo || !BloodGroup || !HealthHis) {
+        res.send("please fill all the details").status(400)
     }
     const jwtToken = jwt.sign({
         emial: email
@@ -55,19 +64,20 @@ app.post("/post", async (req, res) => {
         counrty: counrty,
         message: message,
         token: jwtToken,
-        PhoneNo: PhoneNo
-
+        PhoneNo: PhoneNo,
+        BloodGroup: BloodGroup,
+        HealthHis: HealthHis
     };
 
     const userData = await userDetails.insertMany([dataUser])
-    res.send(userData)
+    res.send(userData).status(200)
 
 })
 
 
 app.post("/paitantDetails", async (req, res) => {
     const { fullName, age, PhoneNo } = req.body
-    if (!fullName || !age || !PhoneNo) res.send("please fill all the details...")
+    if (!fullName || !age || !PhoneNo) res.send("please fill all the details...").status(400)
 
     const PatinetDetails = {
         fullName: fullName,
@@ -75,20 +85,20 @@ app.post("/paitantDetails", async (req, res) => {
         age: age
     }
     const PatinetDetailsSend = await userDetails.insertMany([PatinetDetails])
-    res.send(PatinetDetailsSend)
+    res.send(PatinetDetailsSend).status(200)
 })
 
 
 app.post("/feedback", async (req, res) => {
     const { name, email, message } = req.body
-    if (!name || !email || !message) res.send("plse fill all the details");
+    if (!name || !email || !message) res.send("plse fill all the details").status(400);
     const feedbackData = {
         name: name,
         email: email,
         message: message
     }
     const feedbackDataSend = await userDetails.insertMany([feedbackData])
-    res.send(feedbackDataSend)
+    res.send(feedbackDataSend).status(200)
 })
 
 
@@ -104,5 +114,5 @@ app.post("/feedback", async (req, res) => {
 
 
 app.listen(7000, () => {
-    console.log("server is running at port 7000");
+    console.log(`server is running at port ${PORT}`);
 })
