@@ -8,7 +8,7 @@ import Dashboard from "./dashboard";
 import Home from "./Home";
 import Features from "./features";
 import Contact from "./contact";
-
+import UploadDocument from "./documentUpload";
 function App() {
   return (
     <Router>
@@ -23,7 +23,9 @@ function App() {
           <Route path="/card" element={<Card />} />
         </Route>
         <Route path="/patient" element={<PatientCard />} />
+        <Route path="/upload" element={<UploadDocument />} />
       </Routes>
+
     </Router>
   );
 }
