@@ -1,7 +1,7 @@
 import "./index.css"
 import { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
-import { PDFDocument } from 'pdf-lib';
+
 
 import * as pdfjsLib from 'pdfjs-dist/webpack';
 

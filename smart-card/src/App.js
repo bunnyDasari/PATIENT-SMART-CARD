@@ -9,6 +9,7 @@ import Home from "./Home";
 import Features from "./features";
 import Contact from "./contact";
 import UploadDocument from "./documentUpload";
+import Appointment from "./appoinment";
 function App() {
   return (
     <Router>
@@ -24,6 +25,7 @@ function App() {
         </Route>
         <Route path="/patient" element={<PatientCard />} />
         <Route path="/upload" element={<UploadDocument />} />
+        <Route path="/apoi" element={<Appointment />} />
       </Routes>
 
     </Router>

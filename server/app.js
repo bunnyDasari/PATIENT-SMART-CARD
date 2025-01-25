@@ -102,7 +102,20 @@ app.post("/feedback", async (req, res) => {
 })
 
 
-
+app.post("/appoinment", async (req, res) => {
+    const { name, email, date, time, service, message } = req.body
+    if (!name || !email || !date || !time || !service || !message) res.send("please fill all the details").status(400)
+    const appoinmentData = {
+        name: name,
+        email: email,
+        date: date,
+        time: time,
+        service: service,
+        message: message
+    }
+    const appoinmentDataSend = await userDetails.insertMany([appoinmentData])
+    res.send(appoinmentDataSend).status(200)
+})
 
 
 

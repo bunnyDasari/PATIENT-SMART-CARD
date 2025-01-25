@@ -8,6 +8,7 @@ db.then(() => {
 }).catch((error) => {
     console.log(error)
 })
+
 const userSchema = new mongoose.Schema({
     username: String,
     email: String,
@@ -19,7 +20,11 @@ const userSchema = new mongoose.Schema({
     name: String,
     message: String,
     BloodGroup: String,
-    HealthHis: String
+    HealthHis: String,
+    date : String,
+    time : String,
+    service : String,
+    message : String
 });
 
 const userDetails = mongoose.model("userDetails", userSchema)
