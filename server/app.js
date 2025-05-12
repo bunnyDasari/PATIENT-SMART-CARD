@@ -3,89 +3,80 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const jwt = require("jsonwebtoken")
-const userDetails = require("./db")
-const serectkey = "rohan124"
+const bcrypt = require("bcrypt")
+const { userDetails, userSignData } = require("./db")
+
+const serectkey = process.env.serectkey
 app.use(cors("*"))
 app.use(express.json())
 
-const PORT = process.env.PORT || 7000
+const PORT = process.env.PORT
 
 app.get("/", async (req, res) => {
-    const userData = await userDetails.find();
+    const userData = await userDetails.find({});
     res.json(userData);
 })
 
 app.post("/login", async (req, res) => {
     const { username, password } = req.body
     if (!username || !password) res.send("fill the login details");
-    const userLoginData = await userDetails.findOne({ username: username })
-    if (!userLoginData) {
-        res.send("User not found").status(404)
+    const userLoginData = await userSignData.findOne({ username: username })
+    console.log(userLoginData)
+    if (userLoginData) {
+        const token = jwt.sign({
+            token: userLoginData._id
+        }, serectkey)
+        res.json({
+            token: token
+        })
     } else {
         res.send(userLoginData).status(200)
     }
 
 
 })
-
-app.get('/user-details', async (req, res) => {
-    const token = req.headers.authorization?.split(' ')[1];
-    console.log(token)
-    console.log(req.headers.authorization)
-    if (!token) return res.status(401).json({ message: 'Unauthorized' });
-
-    try {
-        const decoded = jwt.verify(token, serectkey);
-        console.log(decoded)
-        const user = await userDetails.findOne({ email: decoded.emial })
-        console.log(user)
-        res.json(user);
-    } catch (error) {
-        res.status(403).json({ message: 'Forbidden' });
+app.post("/signup", async (req, res) => {
+    const { username, password } = req.body
+    const checkUserExists = await userSignData.find({ username })
+    console.log(checkUserExists)
+    if (checkUserExists.length > 0) {
+        res.json({
+            msg: "Username alredy exsist"
+        })
+    } else {
+        const hasedpassword = await bcrypt.hash(password, 10)
+        await userSignData.create({ username, password: hasedpassword })
+        res.json({
+            msg: "user created login!!"
+        })
     }
-});
-
-
-app.post("/post", async (req, res) => {
-    const { username, email, password, firstName, secName, counrty, message, PhoneNo, BloodGroup, HealthHis } = req.body
-    if (!username || !email || !password || !firstName || !secName || !counrty || !message || !PhoneNo || !BloodGroup || !HealthHis) {
-        res.send("please fill all the details").status(400)
-    }
-    const jwtToken = jwt.sign({
-        emial: email
-    }, serectkey)
-
-    const dataUser = {
-        username: username,
-        email: email,
-        password: password,
-        firstName: firstName,
-        secName: secName,
-        counrty: counrty,
-        message: message,
-        token: jwtToken,
+})
+app.post('/user-details', async (req, res) => {
+    const { fullName, age, PhoneNo, email, BloodGroup, HealthHis } = req.body
+    const token = req.headers.token
+    const userId = jwt.verify(token, serectkey)
+    const userData = await userDetails.create({
+        userId: userId.token,
+        fullName: fullName,
+        age: age,
         PhoneNo: PhoneNo,
+        email: email,
         BloodGroup: BloodGroup,
         HealthHis: HealthHis
-    };
+    })
+    res.json({ userData })
+    console.log(userId)
 
-    const userData = await userDetails.insertMany([dataUser])
-    res.send(userData).status(200)
-
+});
+app.get("/userData", async (req, res) => {
+    const token = req.headers.token
+    const user = jwt.verify(token, serectkey)
+    const userFind = await userDetails.findOne({ userId: user.token })
+    res.json({ userFind })
+    console.log(userFind)
 })
-
-
 app.post("/paitantDetails", async (req, res) => {
-    const { fullName, age, PhoneNo } = req.body
-    if (!fullName || !age || !PhoneNo) res.send("please fill all the details...").status(400)
 
-    const PatinetDetails = {
-        fullName: fullName,
-        PhoneNo: PhoneNo,
-        age: age
-    }
-    const PatinetDetailsSend = await userDetails.insertMany([PatinetDetails])
-    res.send(PatinetDetailsSend).status(200)
 })
 
 
@@ -118,6 +109,17 @@ app.post("/appoinment", async (req, res) => {
 })
 
 
+app.get("/admin-check", async function (req, res) {
+    const { username } = req.body
+    try {
+        const userAdminDetials = await userDetails.findOne({ fullName: username })
+        res.json({
+            user: userAdminDetials
+        })
+    } catch (error) {
+        console.log(error)
+    }
+})
 
 
 
@@ -126,6 +128,6 @@ app.post("/appoinment", async (req, res) => {
 
 
 
-app.listen(7000, () => {
+app.listen(PORT, () => {
     console.log(`server is running at port ${PORT}`);
 })

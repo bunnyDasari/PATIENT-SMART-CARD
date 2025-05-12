@@ -13,21 +13,31 @@ const Card = () => {
   useEffect(() => {
     const renderName = async () => {
       try {
-        const response = await axios.get("http://localhost:7000/user-details", {
+        const response = await axios.get("http://localhost:7000/userData", {
           headers: {
-            Authorization: `Bearer ${token}`,
+            token: token
           },
         });
 
-        const data = response.data;
-        console.log(data.username)
-        setUserName({ name: data.username, age: data.email, phone: data.PhoneNo, bloodGroup: data.BloodGroup, HealthHis: data.HealthHis });
+        const data = response.data.userFind;
+        if (response.data.userFind === null) {
+          navigate("/patient")
+        } else {
+          console.log("no nulll")
+        }
+        console.log(response.data)
+        setUserName({ name: data.fullName, age: data.email, phone: data.PhoneNo, bloodGroup: data.BloodGroup, HealthHis: data.HealthHis });
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
     renderName();
-  }, [token]);
+  }, [])
+
+  // setTimeout(() => {
+  //   renderName();
+  // }, 2000);
+
 
 
 

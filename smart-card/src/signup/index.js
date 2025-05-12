@@ -40,11 +40,11 @@ function Signup() {
                 BloodGroup: BloodGroup,
                 HealthHis: HealthHis
             }
-            await axios.post("http://localhost:7000/post", userDetails).then((res) => {
+            await axios.post("http://localhost:7000/signup", userDetails).then((res) => {
                 console.log(res)
             }).catch((err) => console.log(err))
             setuserSignUp(!userSignUp)
-            navigate("/patient")
+            navigate("/login")
         }
         console.log(checkMail)
 
@@ -66,7 +66,7 @@ function Signup() {
                         required
                     />
                 </div>
-                <div className="input-group">
+                {/* <div className="input-group">
                     <label className="label">Email</label>
                     <input
                         type="email"
@@ -75,7 +75,7 @@ function Signup() {
                         className="input"
                         required
                     />
-                </div>
+                </div> */}
                 <div className="input-group">
                     <label className="label">Password</label>
                     <input
@@ -86,7 +86,7 @@ function Signup() {
                         required
                     />
                 </div>
-                <div className="input-group">
+                {/* <div className="input-group">
                     <label className="label">Confirm Password</label>
                     <input
                         type="password"
@@ -125,7 +125,7 @@ function Signup() {
                         className="input"
                         required
                     />
-                </div>
+                </div> */}
                 <button type="submit" className="signup-button">Signup</button>
                 {matchPassword && <p>Password not Matched</p>}
             </form>

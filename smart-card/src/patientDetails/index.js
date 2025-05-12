@@ -1,12 +1,16 @@
 import "./index.css"
 import { useNavigate } from "react-router-dom";
 import { useState } from "react"
+import Cookies from "js-cookie"
 import axios from "axios";
 const PatientCard = () => {
     const [viewDataBtn, setViewData] = useState(false)
     const [fullName, setFullName] = useState("")
     const [age, setAge] = useState("")
     const [phone, setPhone] = useState("");
+    const [emial, setEmail] = useState("")
+    const [blood, setBlood] = useState("")
+    const [health, setHelth] = useState("")
 
     let navigate = useNavigate();
 
@@ -15,10 +19,18 @@ const PatientCard = () => {
         setViewData(!viewDataBtn)
         const patientDetails = {
             fullName: fullName,
-            age: parseInt(age),
-            PhoneNo: parseInt(phone)
+            age: age,
+            PhoneNo: phone,
+            email: emial,
+            BloodGroup: blood,
+            HealthHis: health
         }
-        await axios.post("http://localhost:7000/paitantDetails", patientDetails).then(() => {
+
+        await axios.post("http://localhost:7000/user-details", patientDetails, {
+            headers: {
+                token: Cookies.get("jwt_token")
+            }
+        }).then(() => {
             console.log("Data Sent....")
         }).catch((error) => {
             console.log("Data error", error)
@@ -41,11 +53,20 @@ const PatientCard = () => {
                 <div>
                     <input type="text" placeholder="Phone" className="input-ele" required onChange={(e) => setPhone(e.target.value)} />
                 </div>
+                <div>
+                    <input type="text" placeholder="Email" className="input-ele" required onChange={(e) => setEmail(e.target.value)} />
+                </div>
+                <div>
+                    <input type="text" placeholder="Blood group" className="input-ele" required onChange={(e) => setBlood(e.target.value)} />
+                </div>
+                <div>
+                    <input type="text" placeholder="Health status" className="input-ele" required onChange={(e) => setHelth(e.target.value)} />
+                </div>
                 <button className="btn-ele">Submit</button>
             </form>}
             {viewDataBtn && <button className="btn-ele" onClick={onClickViewCard}>View your card</button>}
 
-        </div>
+        </div >
     )
 }
 export default PatientCard
