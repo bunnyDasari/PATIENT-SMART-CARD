@@ -25,7 +25,7 @@ function Signup() {
             console.log(userDetails);
         }
 
-        const response = await axios.get("http://localhost:7000/")
+        const response = await axios.get("http://localhost:7000/user")
         const data = await response.data
         const checkMail = await data.filter(each => each.email === email)
 
@@ -40,7 +40,7 @@ function Signup() {
                 BloodGroup: BloodGroup,
                 HealthHis: HealthHis
             }
-            await axios.post("http://localhost:7000/signup", userDetails).then((res) => {
+            await axios.post("http://localhost:7000/user/signup", userDetails).then((res) => {
                 console.log(res)
             }).catch((err) => console.log(err))
             setuserSignUp(!userSignUp)

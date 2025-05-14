@@ -10,6 +10,7 @@ import Features from "./features";
 import Contact from "./contact";
 import UploadDocument from "./documentUpload";
 import Appointment from "./appoinment";
+import Recoil from "./recoil";
 function App() {
   return (
     <Router>
@@ -26,6 +27,7 @@ function App() {
         <Route path="/patient" element={<PatientCard />} />
         <Route path="/upload" element={<UploadDocument />} />
         <Route path="/apoi" element={<Appointment />} />
+        <Route path="/r" element={<Recoil />} />
       </Routes>
 
     </Router>

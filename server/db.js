@@ -20,9 +20,15 @@ const userSchema = new mongoose.Schema({
     email: String,
     BloodGroup: String,
     HealthHis: String,
+    doctor: objectId
 });
+const adminSign = new mongoose.Schema({
+    username: String,
+    password: String
+})
 
 const userDetails = mongoose.model("userDetails", userSchema)
 const userSignData = mongoose.model("users", userSign)
+const adminSignDetails = mongoose.model("adminLogin", adminSign)
 
-module.exports = { userDetails, userSignData }
+module.exports = { userDetails, userSignData, adminSignDetails }

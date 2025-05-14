@@ -23,6 +23,7 @@
     font-size: 2.5rem;
     margin-bottom: 10px;
     animation: slideIn 1s ease-in-out;
+    color: white;
 }
 
 .hero-subtitle {

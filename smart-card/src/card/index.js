@@ -13,7 +13,7 @@ const Card = () => {
   useEffect(() => {
     const renderName = async () => {
       try {
-        const response = await axios.get("http://localhost:7000/userData", {
+        const response = await axios.get("http://localhost:7000/user/userData", {
           headers: {
             token: token
           },

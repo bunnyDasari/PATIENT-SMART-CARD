@@ -25,7 +25,7 @@ const Contact = () => {
             email: '',
             message: ''
         });
-        const response = await axios.post("http://localhost:7000/feedback", formData)
+        const response = await axios.post("http://localhost:7000/user/feedback", formData)
         const data = await response.data
         console.log(data)
     };
