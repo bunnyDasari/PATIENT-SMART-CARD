@@ -1,8 +1,10 @@
+require('dotenv').config()
 const { Router } = require("express")
 const { adminSignDetails, userDetails } = require("../db")
 const adminRouter = Router()
 const jwt = require("jsonwebtoken")
-const adminSecKey = process.env.adminSecKey
+const adminSecKey = process.env.adminSec
+
 adminRouter.post("/login", async (req, res) => {
     const { username, password } = req.body
     const userCheck = await adminSignDetails.findOne({ username })
@@ -12,7 +14,8 @@ adminRouter.post("/login", async (req, res) => {
                 token: userCheck._id
             }, adminSecKey)
             res.json({
-                token: token
+                token: token,
+                user: userCheck.username
             })
         } else {
             res.json({ msg: "signup...!!!!" })
@@ -41,13 +44,17 @@ adminRouter.post("/signup", async (req, res) => {
 
 adminRouter.get("/user-Details", async (req, res) => {
     const token = req.headers.token
-    const userId = jwt.verify(token, adminSecKey)
-    const paitantData = await userDetails.find({ doctor: userId.token })
-    res.json({
-        paitantData
-    })
+    console.log(token)
+    try {
+        const userId = jwt.verify(token, adminSecKey)
+        console.log(userId)
+        const paitantData = await userDetails.find({ doctor: userId.token })
+        res.json({
+            paitantData
+        })
+    } catch (error) {
+        console.log(error)
+    }
 })
-
-
 
 module.exports = { adminRouter }

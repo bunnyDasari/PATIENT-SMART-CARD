@@ -11,6 +11,7 @@ const PatientCard = () => {
     const [emial, setEmail] = useState("")
     const [blood, setBlood] = useState("")
     const [health, setHelth] = useState("")
+    const [doctor, setDoctor] = useState("")
 
     let navigate = useNavigate();
 
@@ -23,10 +24,11 @@ const PatientCard = () => {
             PhoneNo: phone,
             email: emial,
             BloodGroup: blood,
-            HealthHis: health
+            HealthHis: health,
+            doctorId: doctor
         }
 
-        await axios.post("http://localhost:7000/user-details", patientDetails, {
+        await axios.post("http://localhost:7000/user/user-details", patientDetails, {
             headers: {
                 token: Cookies.get("jwt_token")
             }
@@ -61,6 +63,9 @@ const PatientCard = () => {
                 </div>
                 <div>
                     <input type="text" placeholder="Health status" className="input-ele" required onChange={(e) => setHelth(e.target.value)} />
+                </div>
+                <div>
+                    <input type="text" placeholder="Doctor id" className="input-ele" required onChange={(e) => setDoctor(e.target.value)} />
                 </div>
                 <button className="btn-ele">Submit</button>
             </form>}

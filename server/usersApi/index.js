@@ -1,3 +1,4 @@
+require('dotenv').config()
 const { Router } = require("express")
 const userRoute = Router()
 const { userDetails, userSignData } = require("../db")
@@ -59,14 +60,17 @@ userRoute.post('/user-details', async (req, res) => {
     })
     res.json({ userData })
     console.log(userId)
-
 });
 userRoute.get("/userData", async (req, res) => {
     const token = req.headers.token
-    const user = jwt.verify(token, serectkey)
-    const userFind = await userDetails.findOne({ userId: user.token })
-    res.json({ userFind })
-    console.log(userFind)
+    try {
+        const user = jwt.verify(token, serectkey)
+        const userFind = await userDetails.findOne({ userId: user.token })
+        res.json({ userFind })
+        console.log(userFind)
+    } catch (error) {
+        console.log(error)
+    }
 })
 userRoute.post("/paitantDetails", async (req, res) => {
 

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Signup from "./signup";
 import Card from "./card";
 import PatientCard from "./patientDetails";
-import ProtectedRoute from "./protect"; // Import your ProtectedRoute component
+import ProtectedRoute from "./protect";
 import Dashboard from "./dashboard";
 import Home from "./Home";
 import Features from "./features";
@@ -11,6 +11,10 @@ import Contact from "./contact";
 import UploadDocument from "./documentUpload";
 import Appointment from "./appoinment";
 import Recoil from "./recoil";
+import Admin from "./admin";
+import AdminLogin from "./adminLogin";
+import AdminSignup from "./adminsignup";
+
 function App() {
   return (
     <Router>
@@ -28,8 +32,12 @@ function App() {
         <Route path="/upload" element={<UploadDocument />} />
         <Route path="/apoi" element={<Appointment />} />
         <Route path="/r" element={<Recoil />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/admin" element={<Admin />} />
+        </Route>
+        <Route path="/adminLogin" element={<AdminLogin />} />
+        <Route path="/adminSignup" element={<AdminSignup />} />
       </Routes>
-
     </Router>
   );
 }
