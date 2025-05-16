@@ -1,6 +1,11 @@
-import { atom } from "recoil";
+import { atom } from "recoil"
 
-export const CounterAtom = atom({
-    default: 0,
-    key: "Counter"
+export const notification = atom({
+    key: "notification",
+    default: {
+        home: 0,
+        jobs: 10,
+        connections: 20,
+        profile: 0
+    }
 })

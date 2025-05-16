@@ -3,7 +3,12 @@ const { Router } = require("express")
 const { adminSignDetails, userDetails } = require("../db")
 const adminRouter = Router()
 const jwt = require("jsonwebtoken")
+const OpenAI = require("openai");
 const adminSecKey = process.env.adminSec
+
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+});
 
 adminRouter.post("/login", async (req, res) => {
     const { username, password } = req.body
@@ -56,5 +61,31 @@ adminRouter.get("/user-Details", async (req, res) => {
         console.log(error)
     }
 })
+
+
+adminRouter.post("/ai/healthtips", async (req, res) => {
+    try {
+        const { age, gender, conditions } = req.body;
+
+        const prompt = `
+      A ${age}-year-old ${gender} patient has conditions: ${conditions}.
+      Suggest 5 personalized health tips related to lifestyle, diet, and regular checkups.
+      `;
+
+        const response = await openai.chat.completions.create({
+            model: "gpt-4",
+            messages: [
+                { role: "system", content: "You are a healthcare assistant." },
+                { role: "user", content: prompt },
+            ],
+        });
+
+        res.json({ tips: response.choices[0].message.content });
+    } catch (error) {
+        console.error("OpenAI error:", error);
+        res.status(500).json({ error: "Something went wrong" });
+    }
+});
+
 
 module.exports = { adminRouter }

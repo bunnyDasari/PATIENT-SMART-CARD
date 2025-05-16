@@ -8,9 +8,12 @@ const Navbar = () => {
   const onClickLogin = () => {
     navigate("/login")
   }
- const onClickSignUp = ()=>{
-  navigate("/signup")
- }
+  const onClickSignUp = () => {
+    navigate("/signup")
+  }
+  const onClickAskAi = () =>{
+    navigate("/askai")
+  }
   return (
     <nav className="navbar">
       <div className="navbar-logo">
@@ -25,6 +28,8 @@ const Navbar = () => {
       <div className="navbar-actions">
         <button className="login-btn" onClick={onClickLogin}>Login</button>
         <button className="signup-btn" onClick={onClickSignUp}>Sign Up</button>
+        <button className="signup-btn" onClick={onClickAskAi}>Ask Ai</button>
+
       </div>
     </nav>
   );

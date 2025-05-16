@@ -1,45 +1,30 @@
 import { useState } from "react"
-import { RecoilRoot, useRecoilValue, useSetRecoilState } from "recoil"
-import { CounterAtom } from "./test"
+import { RecoilRoot, useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
+import { notification } from "./test"
 const Recoil = () => {
-    const [count, setCount] = useState(0)
+
     return (
         <RecoilRoot>
-            <IncerseBtn />
-            <DecreseBtn />
-            <Counter />
+            <Main />
         </RecoilRoot>
     )
 }
 
-const IncerseBtn = () => {
-    const setCount = useSetRecoilState(CounterAtom)
-    const onClickBtn = () => {
-        setCount(e => e + 1)
+const Main = () => {
+    const notificationCount = useRecoilValue(notification)
+    const setValue = useSetRecoilState(notification)
+    console.log(setValue)
+    console.log(notificationCount)
+    const onClickBTn = () => {
+        setValue(notificationCount.jobs + 1)
     }
     return (
         <div>
-            <button onClick={onClickBtn}>Increse</button>
+            <button>Home {notificationCount.home}</button>
+            <button>jobs {notificationCount.jobs}</button>
+            <button>connections {notificationCount.connections}</button>
+            <button onClick={onClickBTn}>profile {notificationCount.profile}</button>
         </div>
-    )
-}
-
-const DecreseBtn = () => {
-    const setCount = useSetRecoilState(CounterAtom)
-    const onClickBtn = () => {
-        setCount(e => e - 1)
-    }
-    return (
-        <div>
-            <button onClick={onClickBtn}>Dercrese</button>
-        </div>
-    )
-}
-
-const Counter = () => {
-    const count = useRecoilValue(CounterAtom)
-    return (
-        <p>{count}</p>
     )
 }
 

@@ -14,7 +14,7 @@ import Recoil from "./recoil";
 import Admin from "./admin";
 import AdminLogin from "./adminLogin";
 import AdminSignup from "./adminsignup";
-
+import Askai from "./askAI";
 function App() {
   return (
     <Router>
@@ -37,6 +37,8 @@ function App() {
         </Route>
         <Route path="/adminLogin" element={<AdminLogin />} />
         <Route path="/adminSignup" element={<AdminSignup />} />
+        <Route path="/r" element={<Recoil />} />
+        <Route path="/askai" element={<Askai />} />
       </Routes>
     </Router>
   );
