@@ -6,7 +6,10 @@ const { userRoute } = require("./usersApi/index")
 const { adminRouter } = require("./adminApi/index")
 
 
-app.use(cors("*"))
+app.use(cors({
+    origin: "https://patient-smart-card.vercel.app",
+    credentials: true
+  }));
 app.use(express.json())
 app.use("/admin", adminRouter)
 app.use("/user", userRoute)
