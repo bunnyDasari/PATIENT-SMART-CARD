@@ -54,7 +54,7 @@ function Signup() {
 
     return (
         <div className="signup-container">
-            <h2 className="signup-header">Signup With your Helath Details</h2>
+            <h2 className="signup-header">Signup!!</h2>
             <form onSubmit={handleSubmit} className="signup-form">
                 <div className="input-group">
                     <label className="label">Username</label>
