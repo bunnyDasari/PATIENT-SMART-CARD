@@ -15,7 +15,7 @@ const Admin = () => {
         const token = Cookies.get("jwt_token");
         const api = async () => {
             try {
-                const response = await axios.get("http://localhost:7000/admin/user-details", {
+                const response = await axios.get("https://patient-smart-card-6.onrender.com/admin/user-details", {
                     headers: {
                         token: token
                     }

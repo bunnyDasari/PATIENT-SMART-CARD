@@ -23,7 +23,7 @@ const Login = () => {
     const onSubmitBtn = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:7000/user/login", { username, password });
+            const response = await axios.post("https://patient-smart-card-6.onrender.com/user/login", { username, password });
             const data = response.data;
             console.log(data)
             if (data.token === undefined) {

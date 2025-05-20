@@ -15,7 +15,7 @@ const AdminSignup = () => {
 
     const onSubmitBtn = async (e) => {
         e.preventDefault();
-        const response = await axios.post("http://localhost:7000/admin/signup", { username, password })
+        const response = await axios.post("https://patient-smart-card-6.onrender.com/admin/signup", { username, password })
         console.log(response.data)
         if (response.data.token) {
             Cookies.set("jwt_token", response.data.token, { expires: 3 })

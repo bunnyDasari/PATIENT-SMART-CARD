@@ -17,7 +17,7 @@ export default function AskAI() {
         setLoading(true);
 
         try {
-            const res = await fetch("http://localhost:7000/admin/ai/healthtips", {
+            const res = await fetch("https://patient-smart-card-6.onrender.com/admin/ai/healthtips", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

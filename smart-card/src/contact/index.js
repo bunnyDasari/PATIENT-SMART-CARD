@@ -25,7 +25,7 @@ const Contact = () => {
             email: '',
             message: ''
         });
-        const response = await axios.post("http://localhost:7000/user/feedback", formData)
+        const response = await axios.post("https://patient-smart-card-6.onrender.com/user/feedback", formData)
         const data = await response.data
         console.log(data)
     };

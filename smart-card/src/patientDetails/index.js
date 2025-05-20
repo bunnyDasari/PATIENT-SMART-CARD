@@ -28,7 +28,7 @@ const PatientCard = () => {
             doctorId: doctor
         }
 
-        await axios.post("http://localhost:7000/user/user-details", patientDetails, {
+        await axios.post("https://patient-smart-card-6.onrender.com/user/user-details", patientDetails, {
             headers: {
                 token: Cookies.get("jwt_token")
             }

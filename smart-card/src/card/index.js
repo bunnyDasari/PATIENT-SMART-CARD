@@ -13,7 +13,7 @@ const Card = () => {
   useEffect(() => {
     const renderName = async () => {
       try {
-        const response = await axios.get("http://localhost:7000/user/userData", {
+        const response = await axios.get("https://patient-smart-card-6.onrender.com/user/userData", {
           headers: {
             token: token
           },

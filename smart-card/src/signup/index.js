@@ -25,7 +25,7 @@ function Signup() {
             console.log(userDetails);
         }
 
-        const response = await axios.get("http://localhost:7000/user")
+        const response = await axios.get("https://patient-smart-card-6.onrender.com/user")
         const data = await response.data
         const checkMail = await data.filter(each => each.email === email)
 
@@ -40,7 +40,7 @@ function Signup() {
                 BloodGroup: BloodGroup,
                 HealthHis: HealthHis
             }
-            await axios.post("http://localhost:7000/user/signup", userDetails).then((res) => {
+            await axios.post("https://patient-smart-card-6.onrender.com/user/signup", userDetails).then((res) => {
                 console.log(res)
             }).catch((err) => console.log(err))
             setuserSignUp(!userSignUp)

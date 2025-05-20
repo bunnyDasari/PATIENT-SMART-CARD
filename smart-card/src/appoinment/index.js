@@ -12,7 +12,7 @@ const Appointment = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         // Handle form submission logic here
-        const response = await axios.post("http://localhost:5000/appoinment", {
+        const response = await axios.post("https://patient-smart-card-6.onrender.com/appoinment", {
             name,
             email,
             date,
