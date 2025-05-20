@@ -1,18 +1,19 @@
-
 FROM node:14
 
 
-WORKDIR /server
+WORKDIR /app
 
 
 COPY package*.json ./
+
 
 RUN npm install
 
 
 COPY . .
 
+
 EXPOSE 7000
 
 
-CMD ["nodemon","app.js"]
+CMD ["node", "app.js"]
