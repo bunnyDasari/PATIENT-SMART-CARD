@@ -127,7 +127,7 @@ function Signup() {
                     />
                 </div> */}
                 <button type="submit" className="signup-button">Signup</button>
-                {matchPassword && <p>Password not Matched</p>}
+                {/* {matchPassword && <p>Password not Matched</p>} */}
             </form>
             {userExist && <p className='user-signed'>Email already exsist</p>}
             {userSignUp && <p className='user-signed'>signed up!!</p>}
