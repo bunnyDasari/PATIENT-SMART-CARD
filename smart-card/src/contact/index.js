@@ -73,7 +73,7 @@ const Contact = () => {
 
                 <div className="contact-info">
                     <p>Email: <a href="mailto:contact@patientsmartcard.com">contact@patientsmartcard.com</a></p>
-                    <p>Phone: <a href="tel:+1234567890">+1 (234) 567-890</a></p>
+                    <p>Phone: <a href="tel:+1234567890">+91 9876543210</a></p>
                 </div>
             </div>)
 

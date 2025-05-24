@@ -15,6 +15,7 @@ import Admin from "./admin";
 import AdminLogin from "./adminLogin";
 import AdminSignup from "./adminsignup";
 import Askai from "./askAI";
+import OTPVerification from "./otpverify";
 function App() {
   return (
     <Router>
@@ -39,6 +40,7 @@ function App() {
         <Route path="/adminSignup" element={<AdminSignup />} />
         <Route path="/r" element={<Recoil />} />
         <Route path="/askai" element={<Askai />} />
+        <Route path="/otpverify" element={<OTPVerification />} />
       </Routes>
     </Router>
   );

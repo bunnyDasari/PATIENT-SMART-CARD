@@ -38,3 +38,15 @@
     background-color: lightgreen;
     border-color: aliceblue;
 }
+.btn-ele2 {
+    height: 50px;
+    width: 150px;
+    border-radius: 10px;
+    margin: 10px;
+    text-align: center;
+    font-style: oblique;
+    font-weight: bold;
+    font-size: medium;
+    background-color: lightgreen;
+    border-color: aliceblue;
+}

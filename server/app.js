@@ -6,15 +6,18 @@ const { userRoute } = require("./usersApi/index")
 const { adminRouter } = require("./adminApi/index")
 
 
+
 app.use(cors({
-    origin: "https://patient-smart-card.vercel.app",
-    credentials: true
-  }));
+  origin: ["http://localhost:3000", "https://patient-smart-card.vercel.app"],
+  credentials: true
+}));
+
+
 app.use(express.json())
 app.use("/admin", adminRouter)
 app.use("/user", userRoute)
 const PORT = process.env.PORT
 
 app.listen(PORT, () => {
-    console.log(`server is running at port ${PORT}`);
+  console.log(`server is running at port ${PORT}`);
 })

@@ -87,7 +87,7 @@ const Card = () => {
           animate="visible"
         >
           <motion.h2 variants={itemVariants}>Name: {userName.name}</motion.h2>
-          <motion.p variants={itemVariants}>Age: {userName.age}</motion.p>
+          <motion.p variants={itemVariants}>Email: {userName.age}</motion.p>
           <motion.p variants={itemVariants}>Phone: {userName.phone}</motion.p>
           <motion.p variants={itemVariants}>Blood Group: {userName.bloodGroup}</motion.p>
           <motion.p variants={itemVariants}>Health History: {userName.HealthHis}</motion.p>
