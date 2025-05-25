@@ -151,13 +151,12 @@ userRoute.post("/send-otp", async (req, res) => {
             subject: "Your OTP Code",
             html: `<p>Your OTP is: <b>${otp}</b>. It expires in 5 minutes.</p>`,
         });
-        console.log(otpStore)
         res.status(200).json({ message: "OTP sent successfully!" });
     } catch (error) {
         res.status(500).json({ message: "Failed to send OTP", error });
     }
 });
-// ✅ Verify OTP
+
 userRoute.post("/verify-otp", async (req, res) => {
     const { email, otp } = req.body;
     const record = await otpModel.findOne({ email })
@@ -166,7 +165,7 @@ userRoute.post("/verify-otp", async (req, res) => {
         return res.status(400).json({ message: "No OTP sent to this email." });
     }
 
-    if (Date.now() > record.expires) {
+    if (Date.now() > record.expiresAt) {
         await otpModel.deleteMany({ email });
         return res.status(400).json({ message: "OTP expired." });
     }
