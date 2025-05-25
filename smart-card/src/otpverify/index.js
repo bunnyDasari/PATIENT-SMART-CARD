@@ -48,16 +48,22 @@ const OTPVerification = () => {
     // };
     const emial = Cookies.get("email")
     const handleSubmitOtp = async () => {
-        const response = await axios.post("https://patient-smart-card-6.onrender.com/user/verify-otp", {
-            email: emial,
-            otp: otp
-        })
-        console.log(response.data)
-        if (response.status === 200) {
-            navigate("/patient")
-            Cookies.remove("email")
-        } else {
-            console.log(response.data.message)
+        try {
+            const response = await axios.post("https://patient-smart-card-6.onrender.com/user/verify-otp", {
+                email: emial,
+                otp: otp
+            });
+
+            if (response.data && response.data.success) {
+                Cookies.remove("email");
+                navigate("/patient");
+            } else {
+                console.error("OTP verification failed:", response.data.message);
+
+            }
+        } catch (error) {
+            console.error("Error verifying OTP:", error.response?.data?.message || error.message);
+
         }
     }
 
