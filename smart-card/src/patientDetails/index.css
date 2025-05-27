@@ -348,3 +348,40 @@
         flex-direction: column;
     }
 }
+
+.doctor-id-copy-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.copy-btn {
+    background: #232323;
+    border: none;
+    border-radius: 5px;
+    padding: 4px 7px;
+    cursor: pointer;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    transition: background 0.2s;
+}
+
+.copy-btn:hover {
+    background: #333;
+}
+
+.copied-msg {
+    color: #4caf50;
+    font-size: 0.98rem;
+    margin-left: 0.3rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.doctor-id-value {
+    font-family: monospace;
+    color: #ff6b81;
+    font-size: 1.02rem;
+}

@@ -1,7 +1,7 @@
 require('dotenv').config()
 const { Router } = require("express")
 const nodemailer = require("nodemailer");
-const { adminSignDetails, userDetails, otpModel } = require("../db")
+const { adminSignDetails, userDetails} = require("../db")
 const adminRouter = Router()
 const jwt = require("jsonwebtoken")
 const OpenAI = require("openai");

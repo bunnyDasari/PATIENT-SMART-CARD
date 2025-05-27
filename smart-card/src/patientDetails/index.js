@@ -13,6 +13,7 @@ const PatientCard = () => {
     const [otp, setOtp] = useState("");
     const [viewDataBtn, setViewData] = useState(false);
     const [onClickOtp, setOnCLickOtp] = useState(false)
+    const [copied, setCopied] = useState(false);
 
     const [formData, setFormData] = useState({
         fullName: '',
@@ -105,6 +106,12 @@ const PatientCard = () => {
         } catch (error) {
             console.error("OTP verification failed:", error);
         }
+    };
+
+    const handleCopyDoctorId = () => {
+        navigator.clipboard.writeText('6823424783783ce2ede8a166');
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1200);
     };
 
     return (
@@ -307,7 +314,13 @@ const PatientCard = () => {
                                         rows="2"
                                     />
                                 </div>
-
+                                <div className="doctor-id-copy-row">
+                                    <p style={{ margin: 0 }}>doctorId : <span className="doctor-id-value">6823424783783ce2ede8a166</span></p>
+                                    <button type="button" className="copy-btn" onClick={handleCopyDoctorId} title="Copy doctorId">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
+                                    </button>
+                                    {copied && <span className="copied-msg">Copied!</span>}
+                                </div>
                                 <div className="form-group">
                                     <label>Doctor ID</label>
                                     <input
@@ -320,6 +333,7 @@ const PatientCard = () => {
                                         required
                                     />
                                 </div>
+
                             </motion.div>
                         )}
 
