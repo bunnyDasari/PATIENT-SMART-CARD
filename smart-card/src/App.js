@@ -40,10 +40,10 @@ function App() {
         <Route path="/adminSignup" element={<AdminSignup />} />
         <Route path="/r" element={<Recoil />} />
         <Route path="/askai" element={<Askai />} />
-        <Route path="/otpverify" element={<OTPVerification />} />
+        {/* <Route path="/otpverify" element={<OTPVerification />} /> */}
       </Routes>
     </Router>
-  );
+  );  
 }
 
 export default App;

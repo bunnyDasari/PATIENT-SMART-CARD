@@ -8,7 +8,7 @@ const { adminRouter } = require("./adminApi/index")
 
 
 app.use(cors({
-  origin: ["http://localhost:3000", "https://patient-smart-card.vercel.app"],
+  origin: "*",
   credentials: true
 }));
 

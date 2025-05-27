@@ -47,14 +47,16 @@ const OTPVerification = () => {
     //     }
     // };
     const emial = Cookies.get("email")
-    const handleSubmitOtp = async () => {
+    const handleSubmitOtp = async (e) => {
+        e.preventDefault()
         try {
             const response = await axios.post("https://patient-smart-card-6.onrender.com/user/verify-otp", {
                 email: emial,
                 otp: otp
             });
-
-            if (response.data && response.data.success) {
+            console.log(response.status)
+            console.log(response.status === 200)
+            if (response.status === 200) {
                 Cookies.remove("email");
                 navigate("/patient");
             } else {
@@ -73,7 +75,7 @@ const OTPVerification = () => {
                 <h2>Verify Your Email</h2>
                 <p className="subtitle">Enter the 6-digit code sent to your phone</p>
 
-                <form>
+                <form onSubmit={handleSubmitOtp}>
                     <div className="otp-inputs">
                         {[...Array(6)].map((_, index) => (
                             <input
@@ -94,7 +96,6 @@ const OTPVerification = () => {
                         type="submit"
                         className="verify-button"
                         disabled={otp.length !== 6}
-                        onClick={handleSubmitOtp}
                     >
                         Verify
                     </button>

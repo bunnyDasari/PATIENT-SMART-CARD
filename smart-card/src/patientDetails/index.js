@@ -4,206 +4,401 @@ import { useState } from "react"
 import Cookies from "js-cookie"
 import axios from "axios";
 import React from 'react';
+import { motion } from "framer-motion";
 
 const PatientCard = () => {
-    const [viewDataBtn, setViewData] = useState(false)
-    const [fullName, setFullName] = useState("")
-    const [age, setAge] = useState("")
-    const [phone, setPhone] = useState("");
-    const [emial, setEmail] = useState("")
-    const [blood, setBlood] = useState("")
-    const [health, setHelth] = useState("")
-    const [doctor, setDoctor] = useState("")
+    const navigate = useNavigate();
+    const [activeTab, setActiveTab] = useState('personal');
+    const [showOtpPopup, setShowOtpPopup] = useState(false);
+    const [otp, setOtp] = useState("");
+    const [viewDataBtn, setViewData] = useState(false);
+    const [onClickOtp, setOnCLickOtp] = useState(false)
 
-    let navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        fullName: '',
+        age: '',
+        gender: '',
+        email: '',
+        phone: '',
+        address: '',
+        bloodGroup: '',
+        emergencyContact: '',
+        medicalHistory: '',
+        allergies: '',
+        doctorId: ''
+    });
 
-    const onSubmitForm = async (event) => {
-        event.preventDefault()
-        setViewData(!viewDataBtn)
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const onSubmitForm = async (e) => {
+        e.preventDefault();
+
+
         const patientDetails = {
-            fullName: fullName,
-            age: age,
-            PhoneNo: phone,
-            email: emial,
-            BloodGroup: blood,
-            HealthHis: health,
-            doctorId: doctor
-        }
+            fullName: formData.fullName,
+            age: formData.age,
+            PhoneNo: formData.phone,
+            email: formData.email,
+            BloodGroup: formData.bloodGroup,
+            HealthHis: formData.medicalHistory,
+            doctorId: formData.doctorId
+        };
 
-        await axios.post("https://patient-smart-card-6.onrender.com/user/user-details", patientDetails, {
-            headers: {
-                token: Cookies.get("jwt_token")
+        try {
+            if (onClickOtp) {
+                const dataResponse = await axios.post(
+                    "https://patient-smart-card-6.onrender.com/user/user-details",
+                    patientDetails,
+                    {
+                        headers: {
+                            token: Cookies.get("jwt_token")
+                        }
+                    }
+                );
+                setViewData(!viewDataBtn);
+                console.log(dataResponse.data);
             }
-        }).then(() => {
-            console.log("Data Sent....")
-        }).catch((error) => {
-            console.log("Data error", error)
-        })
-
-
-    }
-    const onClickViewCard = () => {
-        navigate("/card")
-    }
-    console.log(emial)
-    const onClickSendOtp = async () => {
-        const response = await axios.post("https://patient-smart-card-6.onrender.com/user/send-otp", {
-            email: emial
-        })
-        console.log(response)
-
-        if (response.status === 200) {
-            Cookies.set("email", emial)
-            navigate("/otpverify")
+        } catch (error) {
+            console.error("Error submitting form:", error);
         }
-    }
+    };
+
+    const onClickViewCard = () => {
+        navigate("/card");
+    };
+
+    const onClickSendOtp = async () => {
+        try {
+            const response = await axios.post(
+                "https://patient-smart-card-6.onrender.com/user/send-otp",
+                {
+                    email: formData.email
+                }
+            );
+            if (response.status === 200) {
+                setShowOtpPopup(true);
+                setOnCLickOtp(true)
+            }
+        } catch (error) {
+            console.error("Error sending OTP:", error);
+        }
+    };
+
+    const verifyOtp = async () => {
+        try {
+            const response = await axios.post(
+                "https://patient-smart-card-6.onrender.com/user/verify-otp",
+                {
+                    email: formData.email,
+                    otp: otp
+                }
+            );
+            if (response.status === 200) {
+                setShowOtpPopup(false);
+            }
+        } catch (error) {
+            console.error("OTP verification failed:", error);
+        }
+    };
+
     return (
-        <div className="container-patient">
-            {!viewDataBtn && <form onSubmit={onSubmitForm}>
-                <h1 className="para">please enter your health Deatils</h1>
-                <div>
-                    <input type="text" placeholder="Full Name" className="input-ele" required onChange={(e) => setFullName(e.target.value)} />
-                </div>
-                <div>
-                    <input type="text" placeholder="Age" className="input-ele" required onChange={(e) => setAge(e.target.value)} />
-                </div>
-                <div>
-                    <input type="text" placeholder="Phone" className="input-ele" required onChange={(e) => setPhone(e.target.value)} />
-                </div>
-                <div>
-                    <input type="text" placeholder="Email" className="input-ele" required onChange={(e) => setEmail(e.target.value)} />
-                    <button className="btn-ele2" onClick={onClickSendOtp}>Send OTP</button>
-                </div>
-                <div>
-                    <input type="text" placeholder="Blood group" className="input-ele" required onChange={(e) => setBlood(e.target.value)} />
-                </div>
-                <div>
-                    <input type="text" placeholder="Health status" className="input-ele" required onChange={(e) => setHelth(e.target.value)} />
-                </div>
-                <div>
-                    <input type="text" placeholder="Doctor id" className="input-ele" required onChange={(e) => setDoctor(e.target.value)} />
-                </div>
-                <button className="btn-ele">Submit</button>
-            </form>}
-            {viewDataBtn && <button className="btn-ele" onClick={onClickViewCard}>View your card</button>}
+        <motion.div
+            className="patient-details-container"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+        >
+            <div className="patient-details-card">
+                <div className="card-header">
+                    <h1>Patient Information</h1>
+                    <div className="tabs">
+                        <button
+                            className={`tab ${activeTab === 'personal' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('personal')}
+                        >
+                            Personal Info
+                        </button>
 
-        </div >
-    )
-}
-
-const PatientDetails = () => {
-    return (
-        <div className="patient-container">
-            <div className="patient-box">
-                <h2>Patient Information</h2>
-
-                <div className="form-section">
-                    <div className="form-group">
-                        <label>Full Name</label>
-                        <input
-                            type="text"
-                            placeholder="Enter full name"
-                            className="form-input"
-                        />
-                    </div>
-
-                    <div className="form-row">
-                        <div className="form-group">
-                            <label>Date of Birth</label>
-                            <input
-                                type="date"
-                                className="form-input"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Gender</label>
-                            <select className="form-input">
-                                <option value="">Select gender</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className="form-group">
-                        <label>Email Address</label>
-                        <input
-                            type="email"
-                            placeholder="Enter email address"
-                            className="form-input"
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label>Phone Number</label>
-                        <input
-                            type="tel"
-                            placeholder="Enter phone number"
-                            className="form-input"
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label>Address</label>
-                        <textarea
-                            placeholder="Enter full address"
-                            className="form-input address-input"
-                            rows="3"
-                        />
-                    </div>
-
-                    <div className="form-row">
-                        <div className="form-group">
-                            <label>Blood Group</label>
-                            <select className="form-input">
-                                <option value="">Select blood group</option>
-                                <option value="A+">A+</option>
-                                <option value="A-">A-</option>
-                                <option value="B+">B+</option>
-                                <option value="B-">B-</option>
-                                <option value="O+">O+</option>
-                                <option value="O-">O-</option>
-                                <option value="AB+">AB+</option>
-                                <option value="AB-">AB-</option>
-                            </select>
-                        </div>
-                        <div className="form-group">
-                            <label>Emergency Contact</label>
-                            <input
-                                type="tel"
-                                placeholder="Emergency contact number"
-                                className="form-input"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="form-group">
-                        <label>Medical History</label>
-                        <textarea
-                            placeholder="Enter any relevant medical history"
-                            className="form-input medical-history"
-                            rows="4"
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label>Allergies</label>
-                        <textarea
-                            placeholder="Enter any allergies"
-                            className="form-input allergies"
-                            rows="2"
-                        />
                     </div>
                 </div>
 
-                <div className="button-group">
-                    <button className="save-button">Save Information</button>
-                    <button className="cancel-button">Cancel</button>
-                </div>
+                {!viewDataBtn ? (
+                    <form onSubmit={onSubmitForm} className="patient-form">
+                        {activeTab === 'personal' && (
+                            <motion.div
+                                className="form-section"
+                                initial={{ x: -20, opacity: 0 }}
+                                animate={{ x: 0, opacity: 1 }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <div className="form-group">
+                                    <label>Full Name</label>
+                                    <input
+                                        type="text"
+                                        name="fullName"
+                                        value={formData.fullName}
+                                        onChange={handleInputChange}
+                                        placeholder="Enter full name"
+                                        className="form-input"
+                                        required
+                                    />
+                                </div>
+
+                                <div className="form-row">
+                                    <div className="form-group">
+                                        <label>Age</label>
+                                        <input
+                                            type="number"
+                                            name="age"
+                                            value={formData.age}
+                                            onChange={handleInputChange}
+                                            className="form-input"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Gender</label>
+                                        <select
+                                            name="gender"
+                                            value={formData.gender}
+                                            onChange={handleInputChange}
+                                            className="form-input"
+                                            required
+                                        >
+                                            <option value="">Select gender</option>
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Email Address</label>
+                                    <div className="email-input-group">
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            value={formData.email}
+                                            onChange={handleInputChange}
+                                            placeholder="Enter email address"
+                                            className="form-input"
+                                            required
+                                        />
+                                        <motion.button
+                                            type="button"
+                                            className="otp-button"
+                                            onClick={onClickSendOtp}
+                                            whileHover={{ scale: 1.02 }}
+                                            whileTap={{ scale: 0.98 }}
+                                        >
+                                            Send OTP
+                                        </motion.button>
+                                    </div>
+                                    {!onClickOtp && <p>**Verify your Email**</p>}
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Phone Number</label>
+                                    <input
+                                        type="tel"
+                                        name="phone"
+                                        value={formData.phone}
+                                        onChange={handleInputChange}
+                                        placeholder="Enter phone number"
+                                        className="form-input"
+                                        required
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Address</label>
+                                    <textarea
+                                        name="address"
+                                        value={formData.address}
+                                        onChange={handleInputChange}
+                                        placeholder="Enter full address"
+                                        className="form-input address-input"
+                                        rows="3"
+                                        required
+                                    />
+                                </div>
+                                <button
+                                    className={`tab ${activeTab === 'medical' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('medical')}
+                                >
+                                    Medical Info
+                                </button>
+                            </motion.div>
+
+                        )}
+
+
+
+                        {activeTab === 'medical' && (
+                            <motion.div
+                                className="form-section"
+                                initial={{ x: 20, opacity: 0 }}
+                                animate={{ x: 0, opacity: 1 }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <div className="form-row">
+                                    <div className="form-group">
+                                        <label>Blood Group</label>
+                                        <select
+                                            name="bloodGroup"
+                                            value={formData.bloodGroup}
+                                            onChange={handleInputChange}
+                                            className="form-input"
+                                            required
+                                        >
+                                            <option value="">Select blood group</option>
+                                            <option value="A+">A+</option>
+                                            <option value="A-">A-</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B-">B-</option>
+                                            <option value="O+">O+</option>
+                                            <option value="O-">O-</option>
+                                            <option value="AB+">AB+</option>
+                                            <option value="AB-">AB-</option>
+                                        </select>
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Emergency Contact</label>
+                                        <input
+                                            type="tel"
+                                            name="emergencyContact"
+                                            value={formData.emergencyContact}
+                                            onChange={handleInputChange}
+                                            placeholder="Emergency contact number"
+                                            className="form-input"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Medical History</label>
+                                    <textarea
+                                        name="medicalHistory"
+                                        value={formData.medicalHistory}
+                                        onChange={handleInputChange}
+                                        placeholder="Enter any relevant medical history"
+                                        className="form-input medical-history"
+                                        rows="4"
+                                        required
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Allergies</label>
+                                    <textarea
+                                        name="allergies"
+                                        value={formData.allergies}
+                                        onChange={handleInputChange}
+                                        placeholder="Enter any allergies"
+                                        className="form-input allergies"
+                                        rows="2"
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Doctor ID</label>
+                                    <input
+                                        type="text"
+                                        name="doctorId"
+                                        value={formData.doctorId}
+                                        onChange={handleInputChange}
+                                        placeholder="Enter doctor ID"
+                                        className="form-input"
+                                        required
+                                    />
+                                </div>
+                            </motion.div>
+                        )}
+
+                        {activeTab === "medical" && < div className="button-group">
+                            <motion.button
+                                type="submit"
+                                className="save-button"
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                            >
+                                Submit
+                            </motion.button>
+                        </div>}
+                    </form>
+                ) : (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="view-card-section"
+                    >
+                        <motion.button
+                            className="save-button"
+                            onClick={onClickViewCard}
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                        >
+                            View your card
+                        </motion.button>
+                    </motion.div>
+                )}
             </div>
-        </div>
+
+            {
+                showOtpPopup && (
+                    <motion.div
+                        className="otp-popup"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        <motion.div
+                            className="otp-popup-content"
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            <h3>Enter OTP</h3>
+                            <input
+                                type="text"
+                                placeholder="Enter OTP"
+                                value={otp}
+                                onChange={(e) => setOtp(e.target.value)}
+                                className="form-input"
+                            />
+                            <div className="otp-buttons">
+                                <motion.button
+                                    onClick={verifyOtp}
+                                    className="save-button"
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
+                                >
+                                    Verify
+                                </motion.button>
+                                <motion.button
+                                    onClick={() => setShowOtpPopup(false)}
+                                    className="cancel-button"
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
+                                >
+                                    Cancel
+                                </motion.button>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )
+            }
+        </motion.div >
     );
 };
 
-export default PatientCard
+export default PatientCard;

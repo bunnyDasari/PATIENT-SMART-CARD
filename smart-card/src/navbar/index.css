@@ -1,223 +1,301 @@
-/* Navbar Container */
 .navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px;
-  background-color: #2a9d8f;
-  color: #fff;
-  font-family: Arial, sans-serif;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(18, 18, 18, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
 }
 
-/* Logo */
-.navbar-logo h2 {
-  margin: 0;
+.navbar.scrolled {
+  background: rgba(18, 18, 18, 0.98);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
   font-size: 1.5rem;
-  color: #fff;
-  z-index: 1000;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.logo-icon {
+  font-size: 1.8rem;
+}
+
+.logo-text {
+  background: linear-gradient(45deg, #ffffff, #a0a0a0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-link {
+  color: #a0a0a0;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+  padding: 0.5rem 0;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #ffffff;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #ffffff;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.login-button,
+.signup-button,
+.logout-button {
+  padding: 0.5rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.login-button {
+  background: transparent;
+  color: #ffffff;
+  border: 2px solid #333;
+}
+
+.login-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #ffffff;
+}
+
+.signup-button {
+  background: #333;
+  color: white;
+  border: none;
+}
+
+.signup-button:hover {
+  background: #2a2a2a;
+}
+
+.logout-button {
+  background: #333;
+  color: white;
+  border: none;
+}
+
+.logout-button:hover {
+  background: #2a2a2a;
 }
 
 /* Mobile Menu Button */
-.mobile-menu-btn {
+.mobile-menu-button {
   display: none;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 10px;
-  z-index: 1000;
+  padding: 0.5rem;
 }
 
 .hamburger {
-  display: block;
-  width: 25px;
-  height: 3px;
-  background-color: #fff;
+  width: 24px;
+  height: 20px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hamburger span {
+  width: 100%;
+  height: 2px;
+  background: #ffffff;
   transition: all 0.3s ease;
 }
 
-.hamburger::before,
-.hamburger::after {
-  content: '';
-  position: absolute;
-  width: 25px;
-  height: 3px;
-  background-color: #fff;
-  transition: all 0.3s ease;
+.hamburger.open span:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
 }
 
-.hamburger::before {
-  transform: translateY(-8px);
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
 }
 
-.hamburger::after {
-  transform: translateY(8px);
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
 }
 
-.hamburger.open {
-  background-color: transparent;
+/* Mobile Menu */
+.mobile-menu {
+  display: none;
+  background: #1a1a1a;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
-.hamburger.open::before {
-  transform: rotate(45deg);
-}
-
-.hamburger.open::after {
-  transform: rotate(-45deg);
-}
-
-/* Navbar Content */
-.navbar-content {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-/* Navbar Links */
-.navbar-links {
-  list-style-type: none;
-  display: flex;
-  gap: 20px;
-  margin: 0;
-}
-
-.navbar-links li a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-}
-
-.navbar-links li a:hover {
-  border-bottom: 2px solid #fff;
-}
-
-/* Action Buttons */
-.navbar-actions {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.login-btn,
-.signup-btn {
-  padding: 8px 15px;
-  font-size: 1rem;
-  border: none;
+.mobile-nav-link,
+.mobile-login-button,
+.mobile-signup-button,
+.mobile-logout-button {
+  padding: 1rem;
+  color: #a0a0a0;
+  font-weight: 500;
   cursor: pointer;
-  border-radius: 5px;
-  transition: all 0.3s ease;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  font-size: 1rem;
+  transition: color 0.3s ease;
 }
 
-.login-btn {
-  background-color: #264653;
-  color: #fff;
+.mobile-nav-link:hover {
+  color: #ffffff;
 }
 
-.signup-btn {
-  background-color: #e76f51;
-  color: #fff;
+.mobile-login-button {
+  color: #ffffff;
+  border: 2px solid #333;
+  border-radius: 8px;
+  margin-top: 0.5rem;
 }
 
-.login-btn:hover,
-.signup-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+.mobile-login-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #ffffff;
 }
 
-.login-btn:hover {
-  background-color: #1f4a41;
+.mobile-signup-button {
+  background: #333;
+  color: white;
+  border-radius: 8px;
+  margin-top: 0.5rem;
 }
 
-.signup-btn:hover {
-  background-color: #d45a38;
+.mobile-signup-button:hover {
+  background: #2a2a2a;
+}
+
+.mobile-logout-button {
+  background: #333;
+  color: white;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+}
+
+.mobile-logout-button:hover {
+  background: #2a2a2a;
 }
 
 /* Responsive Design */
-@media screen and (max-width: 768px) {
-  .mobile-menu-btn {
+@media (max-width: 768px) {
+
+  .nav-links,
+  .auth-buttons {
+    display: none;
+  }
+
+  .mobile-menu-button {
     display: block;
   }
 
-  .navbar-content {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 80%;
-    max-width: 300px;
-    height: 100vh;
-    background-color: #2a9d8f;
-    flex-direction: column;
-    padding: 80px 20px 20px;
-    transition: right 0.3s ease;
-    z-index: 999;
+  .mobile-menu {
+    display: block;
   }
 
-  .navbar-content.active {
-    right: 0;
+  .navbar-container {
+    padding: 1rem;
   }
 
-  .navbar-links {
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-  }
-
-  .navbar-links li {
-    width: 100%;
-    text-align: center;
-    padding: 10px 0;
-  }
-
-  .navbar-actions {
-    flex-direction: column;
-    width: 100%;
-    gap: 15px;
-  }
-
-  .login-btn,
-  .signup-btn {
-    width: 100%;
-    padding: 12px;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .navbar {
-    padding: 10px 15px;
-  }
-
-  .navbar-logo h2 {
+  .logo-text {
     font-size: 1.2rem;
   }
+}
 
-  .navbar-content {
-    width: 100%;
-    max-width: none;
+/* Animation for mobile menu items */
+.mobile-nav-link,
+.mobile-login-button,
+.mobile-signup-button,
+.mobile-logout-button {
+  opacity: 0;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* Center navbar links in the middle for desktop/laptop */
-@media screen and (min-width: 769px) {
-  .navbar {
-    position: relative;
-  }
+/* Add animation delay for each mobile menu item */
+.mobile-nav-link:nth-child(1) {
+  animation-delay: 0.1s;
+}
 
-  .navbar-links {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    flex-direction: row;
-    gap: 30px;
-    margin: 0;
-    z-index: 10;
-  }
+.mobile-nav-link:nth-child(2) {
+  animation-delay: 0.2s;
+}
 
-  .navbar-content {
-    flex: 1;
-    justify-content: flex-end;
-  }
+.mobile-nav-link:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.mobile-nav-link:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.mobile-login-button {
+  animation-delay: 0.5s;
+}
+
+.mobile-signup-button {
+  animation-delay: 0.6s;
+}
+
+.mobile-logout-button {
+  animation-delay: 0.5s;
 }

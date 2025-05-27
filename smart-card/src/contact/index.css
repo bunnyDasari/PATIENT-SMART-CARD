@@ -1,105 +1,140 @@
 .contact-page {
-    padding: 40px 20px;
-    text-align: center;
-    font-family: Arial, sans-serif;
-    color: #333;
+  padding: 40px 20px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  color: #fff;
+  background: #121212;
+  min-height: 100vh;
+}
+
+.contact-header {
+  font-size: 2.5rem;
+  color: #fff;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.contact-subheader {
+  font-size: 1.2rem;
+  color: #a0a0a0;
+  margin-bottom: 30px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: #232323;
+  padding: 28px 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 20px;
+  border: 1.5px solid #333;
+  border-radius: 7px;
+  font-size: 1rem;
+  /* background: #181818; */
+  /* color: #fff; */
+  transition: box-shadow 0.3s, border-color 0.3s;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  box-shadow: 0 0 8px rgba(160, 160, 160, 0.3);
+  border-color: #fff;
+  outline: none;
+}
+
+.form-textarea {
+  height: 120px;
+  resize: none;
+}
+
+.submit-button {
+  padding: 12px 28px;
+  background-color: #333;
+  border: none;
+  color: #fff;
+  font-size: 1.08rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.submit-button:hover {
+  background-color: #2a2a2a;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+}
+
+.contact-info {
+  margin-top: 30px;
+  font-size: 1rem;
+  color: #a0a0a0;
+}
+
+.contact-info a {
+  color: #ff6b81;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.contact-info a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  .contact-header {
-    font-size: 2.5rem;
-    color: #264653;
-    margin-bottom: 10px;
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .contact-subheader {
-    font-size: 1.2rem;
-    color: #2a9d8f;
-    margin-bottom: 30px;
+}
+
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
   }
-  
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+}
+
+.animate-slide-up {
+  opacity: 0;
+  animation: slideUp 0.8s forwards;
+}
+
+@media (max-width: 600px) {
   .contact-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 500px;
-    margin: 0 auto;
-    background-color: #f4f4f4;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    padding: 16px 6px;
   }
-  
-  .form-input,
-  .form-textarea {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-    transition: box-shadow 0.3s ease;
+
+  .contact-header {
+    font-size: 2rem;
   }
-  
-  .form-input:focus,
-  .form-textarea:focus {
-    box-shadow: 0 0 8px rgba(42, 157, 143, 0.5);
-    border-color: #2a9d8f;
-  }
-  
-  .form-textarea {
-    height: 120px;
-    resize: none;
-  }
-  
-  .submit-button {
-    padding: 10px 20px;
-    background-color: #2a9d8f;
-    border: none;
-    color: #fff;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .submit-button:hover {
-    background-color: #264653;
-  }
-  
-  .contact-info {
-    margin-top: 30px;
-    font-size: 1rem;
-    color: #264653;
-  }
-  
-  .contact-info a {
-    color: #2a9d8f;
-    text-decoration: none;
-  }
-  
-  .contact-info a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Animations */
-  @keyframes fadeIn {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
-  }
-  
-  @keyframes slideUp {
-    0% { opacity: 0; transform: translateY(40px); }
-    100% { opacity: 1; transform: translateY(0); }
-  }
-  
-  .animate-fade-in {
-    opacity: 0;
-    animation: fadeIn 1s forwards;
-  }
-  
-  .animate-slide-up {
-    opacity: 0;
-    animation: slideUp 0.8s forwards;
-  }
-  
+}

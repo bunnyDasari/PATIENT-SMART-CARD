@@ -133,7 +133,7 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-// ✅ Send OTP
+// Send OTP
 userRoute.post("/send-otp", async (req, res) => {
     const { email } = req.body;
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
