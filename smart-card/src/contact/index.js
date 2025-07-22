@@ -35,6 +35,7 @@ const Contact = () => {
         setFeedback(!onFeedback)
     }
     return (
+
         <>
             <Navbar />
             <div className="contact-page animate-fade-in">

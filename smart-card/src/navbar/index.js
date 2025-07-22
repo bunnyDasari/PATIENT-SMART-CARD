@@ -102,7 +102,7 @@ const Navbar = () => {
           ) : (
             <>
               <motion.button
-                className="login-button"
+                className="signup-button"
                 onClick={() => navigate('/login')}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
