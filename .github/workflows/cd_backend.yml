@@ -27,7 +27,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: ./server
-          file: ./server/Dockerfile
+          file: ./server/DockerFile
           push: true
           tags: |
             rohandasari/backend:latest
