@@ -7,6 +7,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: production
+
     steps:
       - uses: actions/checkout@v2
         with:
@@ -18,10 +20,14 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push
+      - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
-          context: .
-          file: ./Dockerfile
+          context: ./server             
+          file: ./server/Dockerfile     
           push: true
-          tags: rohandasari/backend:${{ github.sha }}
+          tags: |
+            rohandasari/backend:latest
+            rohandasari/backend:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
