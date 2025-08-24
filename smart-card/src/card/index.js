@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import './PatientCard.css';
 import Cookies from 'js-cookie';
@@ -7,39 +7,51 @@ import { useNavigate } from "react-router-dom";
 
 const Card = () => {
   const [userName, setUserName] = useState({ name: "", age: "", phone: "", bloodGroup: "", HealthHis: "" });
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [messages, setMessages] = useState([
+    "Your blood report is ready.",
+    "Appointment confirmed for Aug 10.",
+    "New message from Dr. Rao"
+  ]);
+
   const token = Cookies.get("jwt_token");
   const navigate = useNavigate();
+  const notificationRef = useRef();
 
   useEffect(() => {
     const renderName = async () => {
       try {
         const response = await axios.get("https://patient-smart-card-6.onrender.com/user/userData", {
-          headers: {
-            token: token
-          },
+          headers: { token }
         });
 
         const data = response.data.userFind;
-        if (response.data.userFind === null) {
-          navigate("/patient")
-        } else {
-          console.log("no nulll")
-        }
-        console.log(response.data)
-        setUserName({ name: data.fullName, age: data.email, phone: data.PhoneNo, bloodGroup: data.BloodGroup, HealthHis: data.HealthHis });
+        if (!data) navigate("/patient");
+
+        setUserName({
+          name: data.fullName,
+          age: data.email,
+          phone: data.PhoneNo,
+          bloodGroup: data.BloodGroup,
+          HealthHis: data.HealthHis
+        });
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
+
     renderName();
-  }, [])
 
-  // setTimeout(() => {
-  //   renderName();
-  // }, 2000);
+    // Close popup on outside click
+    const handleClickOutside = (event) => {
+      if (notificationRef.current && !notificationRef.current.contains(event.target)) {
+        setShowNotifications(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
 
-
-
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const onClickSignOut = () => {
     Cookies.remove("jwt_token");
@@ -50,9 +62,7 @@ const Card = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
+      transition: { staggerChildren: 0.2 }
     }
   };
 
@@ -61,10 +71,7 @@ const Card = () => {
     visible: {
       y: 0,
       opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 100
-      }
+      transition: { type: "spring", stiffness: 100 }
     }
   };
 
@@ -73,14 +80,26 @@ const Card = () => {
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{
-          type: "spring",
-          stiffness: 100,
-          damping: 20,
-          duration: 0.8
-        }}
+        transition={{ type: "spring", stiffness: 100, damping: 20, duration: 0.8 }}
         className="card"
       >
+
+        {/* 🔔 Notification Icon */}
+        <div className="notification-icon" ref={notificationRef}>
+          <button className="notification-bell" onClick={() => setShowNotifications(!showNotifications)}>🔔</button>
+          {showNotifications && (
+            <div className="notification-popup">
+              {messages.length > 0 ? (
+                messages.map((msg, idx) => (
+                  <div key={idx} className="notification-message">{msg}</div>
+                ))
+              ) : (
+                <div className="notification-message">No new messages</div>
+              )}
+            </div>
+          )}
+        </div>
+
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -93,7 +112,9 @@ const Card = () => {
           <motion.p variants={itemVariants}>Health History: {userName.HealthHis}</motion.p>
         </motion.div>
       </motion.div>
+
       <motion.button
+        className="signout-button"
         initial={{ y: 50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.5, type: "spring", stiffness: 100 }}

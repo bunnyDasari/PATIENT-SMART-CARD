@@ -30,9 +30,23 @@ const Admin = () => {
         };
         api();
     }, []);
-    
-    
-    
+
+    const onCLickSendMessage = async (id) => {
+        const { data } = await axios.post(
+            "http://localhost:8000/admin/send-message",
+            {
+                id: id,
+                message: "hi there from admin"
+            },
+            {
+                headers: {
+                    token: Cookies.get("jwt_token")
+                }
+            }
+        );
+        console.log(data)
+    }
+
     const handleLogout = () => {
         Cookies.remove("jwt_token");
         navigate("/adminLogin");
@@ -174,8 +188,9 @@ const Admin = () => {
                                                     className="action-button edit"
                                                     whileHover={{ scale: 1.05 }}
                                                     whileTap={{ scale: 0.95 }}
+                                                    onClick={() => onCLickSendMessage(patient._id)}
                                                 >
-                                                    Edit
+                                                    send message
                                                 </motion.button>
                                             </td>
                                         </motion.tr>

@@ -1,7 +1,7 @@
 require('dotenv').config()
 const { Router } = require("express")
 const nodemailer = require("nodemailer");
-const { adminSignDetails, userDetails} = require("../db")
+const { adminSignDetails, userDetails, adminUserMessage } = require("../db")
 const adminRouter = Router()
 const jwt = require("jsonwebtoken")
 const OpenAI = require("openai");
@@ -10,6 +10,25 @@ const adminSecKey = process.env.adminSec
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
+
+adminRouter.post("/send-message", async (req, res) => {
+    const token = req.headers.token
+    const { message, id } = req.body
+    try {
+        const userId = jwt.verify(token, adminSecKey)
+        if (userId) {
+            const adminUserMsg = await adminUserMessage.create({
+                userId: id,
+                message: message
+            })
+            res.json({ adminUserMsg })
+        } else {
+            res.json({ msg: "Login with admit details" })
+        }
+    } catch (error) {
+        res.json({ error })
+    }
+})
 
 adminRouter.post("/login", async (req, res) => {
     const { username, password } = req.body

@@ -31,10 +31,15 @@ const otpSchema = new mongoose.Schema({
     otp: { type: String, required: true },
     expiresAt: { type: Date, required: true },
 })
+const adminMessage = new mongoose.Schema({
+    userId: objectId,
+    message: String
+})
 
 const otpModel = mongoose.model("otp", otpSchema)
 const userDetails = mongoose.model("userDetails", userSchema)
 const userSignData = mongoose.model("users", userSign)
 const adminSignDetails = mongoose.model("adminLogin", adminSign)
+const adminUserMessage = mongoose.model("adminMessage", adminMessage)
 
-module.exports = { userDetails, userSignData, adminSignDetails, otpModel }
+module.exports = { userDetails, userSignData, adminSignDetails, otpModel, adminUserMessage }
