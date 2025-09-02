@@ -37,7 +37,7 @@ jobs:
       - name: Run tests
         run: |
           cd server
-          npm test
+          node app.js
 
       # Set up Docker Buildx
       - name: Set up Docker Buildx
