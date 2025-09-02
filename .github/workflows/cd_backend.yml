@@ -5,34 +5,52 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     environment: production
 
-
-
     steps:
-      - uses: actions/checkout@v4
+      # Checkout repo
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      # Debug step (optional, remove later)
+      - name: Debug – list repo files
+        run: |
+          pwd
+          ls -al
+          ls -al ./server || echo "server folder not found"
+
+      # Set up Node (if your backend uses Node.js)
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # Install dependencies & run tests
+      - name: Install dependencies
+        run: |
+          cd server
+          npm install
+      - name: Run tests
+        run: |
+          cd server
+          npm test
+
+      # Set up Docker Buildx
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3   
+
+      # Login to DockerHub
       - name: Docker login
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-
-      - name: Debug – list repo files
-        run: |
-          echo "Current path:"
-          pwd
-          echo "Contents of repo root:"
-          ls -al
-          echo "Contents of ./server directory:"
-          ls -al ./server
-
+      # Build & push Docker image
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
@@ -44,3 +62,8 @@ jobs:
             rohandasari/backend:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      # (Optional) Deploy step – adjust as per your infra
+      - name: Deploy to server
+        run: |
+          echo "Here you would add deployment steps (SSH, k8s, ECS, etc.)"
