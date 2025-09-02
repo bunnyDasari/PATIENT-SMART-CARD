@@ -16,7 +16,7 @@ const AdminLogin = () => {
     const onSubmitBtn = async (e) => {
         e.preventDefault();
         const response = await axios.post("https://patient-smart-card-6.onrender.com/admin/login", { username, password })
-        console.log(response.data)
+        // console.log(response)
         if (response.data.token) {
             Cookies.set("jwt_token", response.data.token, { expires: 3 })
             navigate("/admin")

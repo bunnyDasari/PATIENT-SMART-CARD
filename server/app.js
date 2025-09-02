@@ -7,7 +7,7 @@ const { userRoute } = require("./usersApi/index")
 const { adminRouter } = require("./adminApi/index")
 
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
+  windowMs: 60 * 1000, // 1 minute // 15 minutes
   max: 5, // Limit each IP to 100 requests per window
   message: "Too many requests from this IP, please try again later."
 })
