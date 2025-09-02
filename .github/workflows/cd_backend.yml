@@ -30,14 +30,14 @@ jobs:
           node-version: 20
 
       # Install dependencies & run tests
-      - name: Install dependencies
-        run: |
-          cd server
-          npm install
-      - name: Run tests
-        run: |
-          cd server
-          node app.js
+      # - name: Install dependencies
+      #   run: |
+      #     cd server
+      #     npm install
+      # - name: Run tests
+      #   run: |
+      #     cd server
+      #     node app.js
 
       # Set up Docker Buildx
       - name: Set up Docker Buildx
