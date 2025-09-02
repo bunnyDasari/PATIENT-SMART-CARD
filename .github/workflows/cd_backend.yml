@@ -24,6 +24,14 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
 
+      - name: Debug – list repo files
+        run: |
+          echo "Current path:"
+          pwd
+          echo "Contents of repo root:"
+          ls -al
+          echo "Contents of ./server directory:"
+          ls -al ./server
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
